@@ -14,7 +14,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-       return view('threads.index',['threads'=>Thread::all()]);
+       return view('threads.index',['threads'=>Thread::latest()->paginate(20)]);
     }
 
     /**
@@ -24,7 +24,7 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+        return view('threads.create');
     }
 
     /**
@@ -35,7 +35,10 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc')]);
+
+        return redirect('/threads')->with('success','Thread Has Created');
     }
 
     /**

@@ -4,7 +4,7 @@
 <div class="container">
     
         @foreach ($threads as $thread)
-            <div class="card">
+            <div class="card my-2">
                     <div class="card-header">
                         <a href={{"/threads/{$thread->id}"}}>
                           {{$thread->title}}
@@ -20,6 +20,7 @@
             </div>
             
         @endforeach
+        {{$threads->links()}}
 </div>
     
 @endsection

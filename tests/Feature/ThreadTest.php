@@ -29,6 +29,6 @@ class ThreadTest extends TestCase
         $thread=Thread::factory()->create();
       
 
-       $response=$this->get('/threads/{thread->id}')->assertSee($thread->title);
+       $response=$this->get('/threads/'.$thread->id)->assertSee($thread->title);
     }
 }
