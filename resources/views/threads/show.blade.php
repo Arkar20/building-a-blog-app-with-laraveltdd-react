@@ -17,4 +17,20 @@
                     </div>
             </div>
             </div>
+            <div class="container">
+                <h3>Comment Section</h3>
+
+                <form action={{"/comments/$thread->id"}} method="post">
+                        @csrf
+                        <input type="text" class="form-control" name="title">
+                        <button class="btn btn-primary my-2">Comment</button>
+                </form>
+                @foreach ($thread->comments as $comment)
+                <div class="card my-2">
+                    <div class="card-header">
+                        {{$comment->title}}
+                    </div>
+                </div>
+                @endforeach
+            </div>
 @endsection
