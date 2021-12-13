@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Thread;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,17 +18,35 @@ class CreateThreadTest extends TestCase
      */
 
    
-    public function test_user_can_create_threads()
+    public function test_guest_cannot_create_threads()
     {
 
       $thread=  Thread::factory()->make();
 
-         $this->post('/threads',$thread->toArray());
+         $response=$this->post('/threads',$thread->toArray());  
+         
+      $this->assertGuest();
+    }
+    public function test_auth_user_can_create_thread(){
+
+         $user=User::factory()->create();
+
+        $this->actingAs($user);
+
+        $thread= Thread::factory()->make();
+
+        $response=$this->post('/threads',$thread->toArray());
 
         $this->get('/threads')->assertSee($thread->title);
+
     }
-     public function test_title_field_is_required()
+
+     public function test_thread_title_field_is_required()
     {
+
+      $user=User::factory()->create();
+
+     $this->actingAs($user);
 
       $thread= Thread::factory()->make(['title'=>null]);
 
@@ -36,8 +55,13 @@ class CreateThreadTest extends TestCase
       $response->assertSessionHasErrors('title');
        
     }
-     public function test_desc_field_is_required()
+     public function test_thread_desc_field_is_required()
     {
+
+       $user=User::factory()->create();
+
+       $this->actingAs($user);
+
 
       $thread= Thread::factory()->make(['desc'=>null]);
 

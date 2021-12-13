@@ -14,10 +14,10 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+        public function __construct()
+        {
+            $this->middleware('auth')->only('store');
+        }
 
     /**
      * Show the form for creating a new resource.

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Thread;
 use App\Models\Comment;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,9 +18,12 @@ class CreateCommentTest extends TestCase
      *
      * @return void
      */
-    public function test_a_user_can_create_comment()
+    public function test_auth_user_can_create_comment()
     {
+        $user=User::factory()->create();
 
+        $this->actingAs($user);
+        
         $this->withoutExceptionHandling();
 
         $thread=Thread::factory()->create();
@@ -34,7 +38,9 @@ class CreateCommentTest extends TestCase
     }
      public function test_title_field_is_required()
     {
+        $user=User::factory()->create();
 
+       $this->actingAs($user);
 
         $thread=Thread::factory()->create();
 
@@ -44,5 +50,17 @@ class CreateCommentTest extends TestCase
 
       $response->assertSessionHasErrors('title');
        
+    }
+     public function test_guest_cannot_create_comments()
+    {
+
+
+      $thread=  Thread::factory()->create();
+
+        $comment=Comment::factory()->make(['thread_id'=>$thread->id]);
+
+        $response=$this->post('/comments/'.$thread->id,$thread->toArray());  
+         
+      $this->assertGuest();
     }
 }
