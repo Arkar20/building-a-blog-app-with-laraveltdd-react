@@ -40,8 +40,7 @@ class ThreadController extends Controller
      */
     public function store(ThreadRequest $request)
     {
-        // dd($request);
-        Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc')]);
+        Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc'),'user_id'=>auth()->id(),'channel_id'=>$request->channel_id]);
 
         return redirect('/threads')->with('success','Thread Has Created');
     }

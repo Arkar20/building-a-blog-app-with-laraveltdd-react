@@ -29,11 +29,13 @@ class CreateThreadTest extends TestCase
     }
     public function test_auth_user_can_create_thread(){
 
+         $this->withoutExceptionHandling();
+
          $user=User::factory()->create();
 
         $this->actingAs($user);
 
-        $thread= Thread::factory()->make();
+        $thread= Thread::factory()->make(['user_id'=>$user->id]);
 
         $response=$this->post('/threads',$thread->toArray());
 

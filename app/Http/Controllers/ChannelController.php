@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Thread;
-use App\Models\Comment;
+use App\Models\Channel;
 use Illuminate\Http\Request;
-use App\Http\Requests\CommentRequest;
 
-class CommentController extends Controller
+class ChannelController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-        public function __construct()
-        {
-            $this->middleware('auth')->only('store');
-        }
+    public function index()
+    {
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -35,20 +33,18 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread,CommentRequest $request)
+    public function store(Request $request)
     {
-        $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);
-
-        return back();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Channel $channel)
     {
         //
     }
@@ -56,10 +52,10 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
+    public function edit(Channel $channel)
     {
         //
     }
@@ -68,10 +64,10 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Channel $channel)
     {
         //
     }
@@ -79,10 +75,10 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Channel $channel)
     {
         //
     }

@@ -18,7 +18,7 @@ class CommentTest extends TestCase
   
     public function test_comment_is_a_belongs_to_a_thread()
     {
-
+        $this->withoutExceptionHandling();
         $thread=Thread::factory()->create();
         $comment=Comment::factory()->create(['thread_id'=>$thread->id]);
 

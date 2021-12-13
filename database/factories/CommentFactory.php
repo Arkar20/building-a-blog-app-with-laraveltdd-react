@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Thread;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,7 @@ class CommentFactory extends Factory
         return [
             'title'=>$this->faker->sentence(),
             'thread_id'=>Thread::factory()->create()->id,
+            'user_id'=>User::factory()->create()->id,
         ];
     }
 }
