@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Thread;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
@@ -34,7 +35,7 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread,Request $request)
+    public function store(Thread $thread,CommentRequest $request)
     {
         $thread->comments()->create(['title'=>$request->title]);
 

@@ -32,4 +32,17 @@ class CreateCommentTest extends TestCase
 
 
     }
+     public function test_title_field_is_required()
+    {
+
+
+        $thread=Thread::factory()->create();
+
+      $comment= Comment::factory()->make(['title'=>null,'thread_id'=>$thread->id]);
+
+      $response=$this->post('/comments/'.$thread->id,$comment->toArray());
+
+      $response->assertSessionHasErrors('title');
+       
+    }
 }
