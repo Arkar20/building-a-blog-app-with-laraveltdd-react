@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ThreadRequest;
 use App\Models\Thread;
+use App\Models\Channel;
 use Illuminate\Http\Request;
+use App\Http\Requests\ThreadRequest;
 
 class ThreadController extends Controller
 {
@@ -17,8 +18,13 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Channel $channel)
     {
+        if($channel->name){
+            // dd("Channel");
+              return view('threads.index',['threads'=>$channel->threads()->paginate(10)]);
+
+        }
        return view('threads.index',['threads'=>Thread::latest()->paginate(20)]);
     }
 
@@ -38,7 +44,7 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ThreadRequest $request)
+    public function store( ThreadRequest $request)
     {
         Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc'),'user_id'=>auth()->id(),'channel_id'=>$request->channel_id]);
 
@@ -51,8 +57,13 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show(Channel $channel,$threadid)
     {
+
+        // dd($channel);
+        $thread=Thread::where('channel_id',$channel->id)->where('id',$threadid)->first();
+
+        
         return view('threads.show',compact('thread'));
     }
 

@@ -43,35 +43,6 @@ class CreateThreadTest extends TestCase
 
     }
 
-     public function test_thread_title_field_is_required()
-    {
-
-      $user=User::factory()->create();
-
-     $this->actingAs($user);
-
-      $thread= Thread::factory()->make(['title'=>null]);
-
-      $response=$this->post('/threads',$thread->toArray());
-
-      $response->assertSessionHasErrors('title');
-       
-    }
-     public function test_thread_desc_field_is_required()
-    {
-
-       $user=User::factory()->create();
-
-       $this->actingAs($user);
-
-
-      $thread= Thread::factory()->make(['desc'=>null]);
-
-      $response=$this->post('/threads',$thread->toArray());
-
-      $response->assertSessionHasErrors('desc');
-       
-    }
-  
+     
 
 }

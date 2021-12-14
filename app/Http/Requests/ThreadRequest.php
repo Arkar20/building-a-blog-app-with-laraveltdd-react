@@ -26,6 +26,7 @@ class ThreadRequest extends FormRequest
         return [
            'title'=>'required',
            'desc'=>'required',
+           'channel_id'=>'required|exists:channels,id',
         ];
     }
 }

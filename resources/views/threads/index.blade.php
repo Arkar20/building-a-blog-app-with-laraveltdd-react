@@ -6,7 +6,7 @@
         @foreach ($threads as $thread)
             <div class="card my-2">
                     <div class="card-header">
-                        <a href={{"/threads/{$thread->id}"}}>
+                        <a href={{$thread->path()}}>
                           {{$thread->title}}
                         </a>
                       

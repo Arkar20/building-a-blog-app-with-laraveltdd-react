@@ -20,6 +20,7 @@ class CreateCommentTest extends TestCase
      */
     public function test_auth_user_can_create_comment()
     {
+      $this->withoutExceptionHandling();
         $user=User::factory()->create();
 
         $this->actingAs($user);
@@ -32,7 +33,7 @@ class CreateCommentTest extends TestCase
 
         $response=$this->post('/comments/'.$thread->id,$comment->toArray());
 
-        $this->get('/threads/'.$thread->id)->assertSee($comment->title);
+        $this->get($thread->path())->assertSee($comment->title);
 
 
     }

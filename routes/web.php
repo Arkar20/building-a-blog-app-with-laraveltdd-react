@@ -25,6 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::post('/comments/{thread}',[CommentController::class, 'store']);
 Route::get('/threads/create',[ThreadController::class, 'create']);
+
 Route::post('/threads',[ThreadController::class, 'store']);
 Route::get('/threads',[ThreadController::class, 'index']); 
-Route::get('/threads/{thread:id}',[ThreadController::class, 'show']);
+Route::get('/threads/{channel:name}',[ThreadController::class, 'index']); 
+Route::get('/threads/{channel:name}/{thread:id}',[ThreadController::class, 'show']);

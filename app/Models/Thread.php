@@ -14,6 +14,12 @@ class Thread extends Model
 
     protected $guarded=[""];
 
+    public function path()
+    {
+        return '/threads/'. $this->channel->name.'/'.$this->id;
+    }
+
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
