@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -22,7 +23,9 @@ class ThreadTest extends TestCase
         $thread=Thread::factory()->create();
       
 
-       $this->get('/threads')->assertSee($thread->title);
+      $response= $this->get('/threads')->assertSee($thread->title);
+
+    
     }
     public function test_a_user_can_visit_single_thread()
     {
@@ -36,10 +39,27 @@ class ThreadTest extends TestCase
     {
 
         $this->withoutExceptionHandling();
+
         $channel=Channel::factory()->create();
 
         $thread=Thread::factory()->create(['channel_id'=>$channel->id]);
 
        $this->get('/threads/'.$channel->name)->assertSee($thread->title);
+    }
+    public function test_threads_can_be_filtered_by_username()
+    {
+
+        $this->withoutExceptionHandling();
+         $user=User::factory()->create(['name'=>"tester"]);
+
+
+         $threadbyuser=  Thread::factory()->create(['user_id'=>$user->id]);
+
+         $threadnotbyuser= Thread::factory()->create();
+
+       $response  =$this->get('/threads?by=tester')
+        // dd($response);         
+        ->assertSee($threadbyuser->title);
+
     }
 }

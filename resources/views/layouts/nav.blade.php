@@ -13,10 +13,18 @@
                          <li class="nav-item">
                                     <a class="nav-link" href="/threads/create">+Create Thread</a>
                         </li>
-                         <li class="nav-item">
-                                    <a class="nav-link" href="/threads">All threads</a>
+                       <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    All Threads
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     
-                        </li>
+                                                <a class="dropdown-item" href="/threads">All Threads</a>
+                                                <a class="dropdown-item" href="/threads?by={{auth()->user()->name}}">My Threads</a>
+                                    
+                                </div>
+                            </li>
                         
                         <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -25,7 +33,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                       @foreach (App\Models\Channel::all() as $channel)
-                                                <a class="dropdown-item" href="{{'threads/'.$channel->name}}">{{$channel->name}}</a>
+                                                <a class="dropdown-item" href="{{'/threads/'.$channel->name}}">{{$channel->name}}</a>
                                           @endforeach
                                     
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
