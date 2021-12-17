@@ -19,14 +19,13 @@ abstract class Filter {
     public function apply($query)
     {
         foreach($this->filters as $filter){
-         if(method_exists($this,$filter) && $username=$this->request->get('by')){
-           $threads=  $this->$filter($username,$query);     
+         if(method_exists($this,$filter) && $username=$this->request->get($filter)){
+           $query=  $this->$filter($username,$query);     
          }
         }
 
-      
 
-        return $threads;
+        return $query;
         
     }
 

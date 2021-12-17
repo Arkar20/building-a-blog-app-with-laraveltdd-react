@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container row">
     
         @foreach ($threads as $thread)
-            <div class="card my-2">
+            <div class="col-md-8 card my-2">
                     <div class="card-header">
                         <a href={{$thread->path()}}>
                           {{$thread->title}}
@@ -15,7 +15,12 @@
                         {{$thread->desc}}
                     </div>
                     <div class="card-footer">
-                        {{$thread->created_at->diffForHumans()}}
+                        <p>
+                            {{$thread->created_at->diffForHumans()}}
+                        </p>
+                        <p>
+                            {{$thread->comments_count}} comments
+                        </p>
                     </div>
             </div>
             

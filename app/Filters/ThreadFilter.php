@@ -9,12 +9,21 @@ use Illuminate\Http\Request;
 
 class ThreadFilter extends Filter{
 
-    protected $filters=['by'];
+    protected $filters=['by','popular'];
 
     public function by($username,$query)
     {
          $user=User::where('name',$username)->firstorFail();
-              return  $query->where('user_id',$user->id);
+            $query=  $query->where('user_id',$user->id);
+     
+
+            return $query;
+    }
+    public function popular($filter,$query)
+    {
+          return $query->withCount('comments')->orderBy('comments_count','desc');
+
+            
     }
 
 }

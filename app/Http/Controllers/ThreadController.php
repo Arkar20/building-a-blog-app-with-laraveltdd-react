@@ -26,18 +26,21 @@ class ThreadController extends Controller
         if($channel){
         
             $threads=$channel->threads();
-            // dd($threads);
 
         }else{
-            $threads=Thread::latest();
+            $threads=Thread::query();
         }
 
-        // $filters=new ThreadFilter($request);
 
-       
-        $threads=Thread::filter($filters)->paginate();
+        $threads=$threads->filter($filters);
    
+        $threads=$threads->latest()->paginate();
+            
 
+        if(request()->wantsJson()){
+          
+            return $threads->load('comments');
+        }
 
        return view('threads.index',compact('threads'));
     }

@@ -19,6 +19,10 @@ class Thread extends Model
         return '/threads/'. $this->channel->name.'/'.$this->id;
     }
 
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments()->count();
+    }
 
     public function comments()
     {

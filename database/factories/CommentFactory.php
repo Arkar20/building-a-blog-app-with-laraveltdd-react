@@ -17,7 +17,7 @@ class CommentFactory extends Factory
     {
         return [
             'title'=>$this->faker->sentence(),
-            'thread_id'=>Thread::factory()->create()->id,
+            'thread_id'=> Thread::all()->count()==0 && Thread::factory()->create()->id,
             'user_id'=>User::factory()->create()->id,
         ];
     }
