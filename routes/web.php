@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FavouriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/comments/{thread}',[CommentController::class, 'store']);
+Route::post('comments/{comment:id}/favourites',[FavouriteController::class, 'store'])->middleware('auth')->name('comment.favourite');
 Route::get('/threads/create',[ThreadController::class, 'create']);
 
 Route::post('/threads',[ThreadController::class, 'store']);

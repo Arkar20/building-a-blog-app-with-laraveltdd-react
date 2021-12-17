@@ -24,6 +24,19 @@
                         </form>
                         @foreach ($thread->comments as $comment)
                         <div class="card my-2">
+
+                            <div class="card-header d-flex">
+                                <h2 class="flex-grow-1">
+                                    {{$comment->user->name}}
+                                </h2>
+                                <form action={{route('comment.favourite',$comment->id)}} method="post">
+                                    @csrf
+                                    <button class="btn btn-primary">
+                                         {{$comment->favourites_count}} Favourited
+                                    </button>
+
+                                </form>
+                            </div>
                             <div class="card-header">
                                 {{$comment->title}}
                             </div>

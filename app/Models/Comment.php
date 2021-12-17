@@ -4,12 +4,15 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Thread;
+use App\Models\Favourite;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
 {
     use HasFactory;
+
+    public $withCount=['favourites'];
 
     protected $fillable=['title','thread_id','user_id'];
 
@@ -20,5 +23,17 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function favourites()
+    {
+        return $this->morphMany(Favourite::class,'favouriteable');
+    }
+    public function markFavourite()
+    {
+        
+      return $this->favourites()->create([
+            'user_id'=>auth()->id(),
+            'favourited_type'=> get_class($this)
+        ]);
     }
 }

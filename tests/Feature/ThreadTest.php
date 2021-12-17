@@ -39,11 +39,8 @@ class ThreadTest extends TestCase
     public function test_threads_can_be_filtered_by_channel_name()
     {
 
-        $this->withoutExceptionHandling();
 
         $channel=Channel::factory()->create();
-
-
 
         $threadByChannel=Thread::factory()->create(['channel_id'=>$channel->id]);
         $threadNotByChannel=Thread::factory()->create();
