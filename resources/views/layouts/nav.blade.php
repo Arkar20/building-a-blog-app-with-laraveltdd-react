@@ -38,7 +38,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                      @foreach (App\Models\Channel::all() as $channel)
+                                      @foreach (Cache::get('channels') as $channel)
                                                 <a class="dropdown-item" href="{{'/threads/'.$channel->name}}">{{$channel->name}}</a>
                                           @endforeach
                                     

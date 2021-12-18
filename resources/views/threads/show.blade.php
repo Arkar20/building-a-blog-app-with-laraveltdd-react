@@ -22,7 +22,8 @@
                                 <input type="text" class="form-control" name="title">
                                 <button class="btn btn-primary my-2">Comment</button>
                         </form>
-                        @foreach ($thread->comments as $comment)
+                        @foreach ($comments as $comment)
+
                         <div class="card my-2">
 
                             <div class="card-header d-flex">
@@ -42,6 +43,8 @@
                             </div>
                         </div>
                         @endforeach
+
+                        {{$comments->links()}}
             </div>
             <div class="col-md-4">
                 <div class="card">

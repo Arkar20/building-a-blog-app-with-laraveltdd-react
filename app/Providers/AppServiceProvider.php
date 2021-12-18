@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Channel;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +18,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+         
+
+            View::composer('*',function($view){
+                Cache::remember('channels',10,function(){
+                return Channel::all();
+            });
+             return  $view->with('channels',Cache::get('channels'));
+            });
+        
+
     }
 
     /**
@@ -23,7 +36,11 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
+    
     {
-       Paginator::useBootstrap();
+        
+
+             Model::preventLazyLoading(!$this->app->isProduction());
+             Paginator::useBootstrap();
     }
 }

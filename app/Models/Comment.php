@@ -12,6 +12,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    public $with=['user'];
+
     public $withCount=['favourites'];
 
     protected $fillable=['title','thread_id','user_id'];

@@ -34,13 +34,12 @@ class ThreadController extends Controller
 
         $threads=$threads->filter($filters);
    
-        $threads=$threads->latest()->paginate();
-            
 
         if(request()->wantsJson()){
           
-            return $threads->load('comments');
+            return $threads->get();
         }
+        $threads=$threads->with('channel')->latest()->paginate();
 
        return view('threads.index',compact('threads'));
     }
@@ -80,8 +79,12 @@ class ThreadController extends Controller
      
         $thread=Thread::where('channel_id',$channel->id)->where('id',$threadid)->first();
 
-        
-        return view('threads.show',compact('thread'));
+        $comments=$thread->comments()->paginate(10);
+
+        // return $comments;
+   
+
+        return view('threads.show',compact('thread','comments'));
     }
 
     /**

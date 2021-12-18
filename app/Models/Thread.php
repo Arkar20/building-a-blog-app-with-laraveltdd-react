@@ -14,6 +14,9 @@ class Thread extends Model
 
     protected $guarded=[""];
 
+
+    public $withCount=['comments'];
+
     public function path()
     {
         return '/threads/'. $this->channel->name.'/'.$this->id;

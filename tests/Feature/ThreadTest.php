@@ -36,6 +36,8 @@ class ThreadTest extends TestCase
 
        $this->get($thread->path())->assertSee($thread->title);
     }
+
+    
     public function test_threads_can_be_filtered_by_channel_name()
     {
 
@@ -84,6 +86,7 @@ class ThreadTest extends TestCase
 
         $thread3=Thread::factory()->create();
        $threadWith2comments=Comment::factory(2)->create(['thread_id'=>$thread3->id]);
+
 
        $response=$this->getJson('/threads?popular=1')->json();
        $this->assertEquals([4,3,2],array_column($response,'comments_count'));
