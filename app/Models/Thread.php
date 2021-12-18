@@ -5,18 +5,21 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Channel;
 use App\Models\Comment;
+use App\Models\Activity;
+use App\Traits\ActivityTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Thread extends Model
 {
-    use HasFactory;
+    use HasFactory,ActivityTrait;
 
     protected $guarded=[""];
  
     public $with=['channel'];
 
     public $withCount=['comments'];
+
 
     public function path()
     {
@@ -27,6 +30,10 @@ class Thread extends Model
     {
         return $this->comments()->count();
     }
+
+    
+
+    //! relatonships 
 
     public function comments()
     {
@@ -40,6 +47,14 @@ class Thread extends Model
     {
         return $this->belongsTo(Channel::class);
     }
+       public function activities()
+    {
+        return $this->morphMany(Activity::class,'activity');
+    }
+
+
+
+    //! scope
     public function scopeFilter($query,$filters)
     {
         return $filters->apply($query);

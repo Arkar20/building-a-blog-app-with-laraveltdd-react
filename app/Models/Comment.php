@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Favourite;
+use App\Traits\ActivityTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory,ActivityTrait;
 
     public $with=['user'];
 
@@ -29,6 +30,10 @@ class Comment extends Model
     public function favourites()
     {
         return $this->morphMany(Favourite::class,'favouriteable');
+    }
+         public function activities()
+    {
+        return $this->morphMany(Activity::class,'activity');
     }
     public function markFavourite()
     {

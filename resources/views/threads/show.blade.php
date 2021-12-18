@@ -9,12 +9,15 @@
                         <h1 class="flex-grow-1">
                           {{$thread->title}}
                         </h1>
+
+                        @can('update',$thread)
                         <form action="{{$thread->path()}}}" method="post">
                                 @csrf
                                 @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
                         
                         </form>
+                        @endcan
                       
                     </div>
                         {{$thread->desc}}
