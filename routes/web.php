@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavouriteController;
 
 /*
@@ -32,3 +33,6 @@ Route::post('/threads',[ThreadController::class, 'store']);
 Route::get('/threads',[ThreadController::class, 'index']); 
 Route::get('/threads/{channel:name}',[ThreadController::class, 'index']); 
 Route::get('/threads/{channel:name}/{thread:id}',[ThreadController::class, 'show']);
+
+
+Route::get('/profile/{user:name}',[ProfileController::class,'index'])->name('profile');

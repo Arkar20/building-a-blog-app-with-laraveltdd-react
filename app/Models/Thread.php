@@ -13,7 +13,8 @@ class Thread extends Model
     use HasFactory;
 
     protected $guarded=[""];
-
+ 
+    public $with=['channel'];
 
     public $withCount=['comments'];
 

@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <p>
                             This thread was create at {{$thread->created_at->diffForHumans()}}
-                             by <a href="#">{{$thread->user->name}}</a> with {{$thread->comments_count}} replies;
+                             by <a href="{{route('profile',$thread->user->name)}}">{{$thread->user->name}}</a> with {{$thread->comments_count}} replies;
                         </p>
                     </div>
                 </div>
