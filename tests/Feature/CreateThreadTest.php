@@ -43,6 +43,39 @@ class CreateThreadTest extends TestCase
 
     }
 
+    public function test_only_auth_owner_can_delete_thread()
+    {
+
+      $user=User::factory()->create();
+
+      $this->actingAs($user);
+
+      // $this->withoutExceptionHandling();
+
+      $threadToDeleteByLoginUser=Thread::factory()->create(['user_id' => $user->id]);
+      
+      $threadNotByLoginUser=Thread::factory()->create();
+
+      $this->delete($threadToDeleteByLoginUser->path());
+      $this->delete($threadNotByLoginUser->path());
+
+        $this->assertDatabaseMissing('threads',$threadToDeleteByLoginUser->toArray());
+        // $this->assertDatabaseCount('threads',1);
+
+        $this->get('/threads')->assertSee($threadNotByLoginUser->title);
+
+    }
+    public function test_guest_cannnot_delete_thread()
+    {
+
+
+      $threadToDeleteByLoginUser=Thread::factory()->create();
+
+      
+       $this->delete($threadToDeleteByLoginUser->path())->assertRedirect('/login');
+
+    }
+
      
 
 }

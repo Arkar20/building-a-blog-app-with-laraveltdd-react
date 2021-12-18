@@ -13,7 +13,7 @@ class ThreadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('store');
+        $this->middleware('auth')->only('store','destroy');
     }
     /**
      * Display a listing of the resource.
@@ -116,8 +116,13 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy(Channel $channel,Thread $thread)
     {
-        //
+       if(auth()->user()->cannot('update',$thread)){
+           abort(403);
+       }
+        $thread->delete();
+
+        return redirect('/threads');
     }
 }

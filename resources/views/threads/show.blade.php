@@ -3,13 +3,20 @@
 @section('content')
     <div class="container row">
         <div class=" card  col-md-8 ">
-                    <div class="card-header">
-                        <h1>
+                    
+                    <div class="card-body">
+                        <div class="card-header d-flex align-item-center">
+                        <h1 class="flex-grow-1">
                           {{$thread->title}}
                         </h1>
+                        <form action="{{$thread->path()}}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        
+                        </form>
                       
                     </div>
-                    <div class="card-body">
                         {{$thread->desc}}
                     </div>
                     <div class="card-footer">
