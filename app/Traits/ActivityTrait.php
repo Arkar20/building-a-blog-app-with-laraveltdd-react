@@ -9,8 +9,10 @@ trait ActivityTrait{
    public static function bootActivityTrait(){
 
     if(auth()->guest()) return;
+
+
     
-    $events=['created','deleting'];
+    $events=['created'];
 
 
     foreach($events as $event){
@@ -19,6 +21,10 @@ trait ActivityTrait{
         });
 
     }
+
+            static::deleting(function($model){
+                return $model->activities()->delete();
+            });
 
         
     }

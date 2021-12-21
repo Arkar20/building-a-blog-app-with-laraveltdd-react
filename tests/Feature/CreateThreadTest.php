@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -50,17 +51,21 @@ class CreateThreadTest extends TestCase
 
       $this->actingAs($user);
 
-      // $this->withoutExceptionHandling();
 
       $threadToDeleteByLoginUser=Thread::factory()->create(['user_id' => $user->id]);
+
+      $commentsToDelete=Comment::factory()->create(['thread_id'=>$threadToDeleteByLoginUser->id]);
       
       $threadNotByLoginUser=Thread::factory()->create();
 
       $this->delete($threadToDeleteByLoginUser->path());
+
       $this->delete($threadNotByLoginUser->path());
 
         $this->assertDatabaseMissing('threads',$threadToDeleteByLoginUser->toArray());
-        // $this->assertDatabaseCount('threads',1);
+        $this->assertDatabaseMissing('comments',$threadToDeleteByLoginUser->comments->toArray());
+
+      $this->assertEquals(0,$threadToDeleteByLoginUser->activities->count());
 
         $this->get('/threads')->assertSee($threadNotByLoginUser->title);
 
