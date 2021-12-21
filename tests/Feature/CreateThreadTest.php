@@ -21,7 +21,7 @@ class CreateThreadTest extends TestCase
     public function test_guest_cannot_create_threads()
     {
 
-      $thread=  Thread::factory()->make();
+          $thread=  Thread::factory()->make();
 
          $response=$this->post('/threads',$thread->toArray());  
          

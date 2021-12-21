@@ -13,7 +13,7 @@ class Comment extends Model
 {
     use HasFactory,ActivityTrait;
 
-    public $with=['user'];
+    public $with=['user','thread'];
 
     public $withCount=['favourites'];
 

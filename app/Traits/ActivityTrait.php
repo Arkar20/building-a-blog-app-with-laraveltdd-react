@@ -23,7 +23,7 @@ trait ActivityTrait{
 
     public function markActivity($action)
     {
-        return $this->activities()->create(['action_type'=>$action.'_'.$this->getClassName()]);
+        return $this->activities()->create(['action_type'=>$action.'_'.$this->getClassName(),'user_id'=>auth()->id()]);
     }
     public function getClassName()
     {

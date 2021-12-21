@@ -1,8 +1,3 @@
-{{-- <h1>{{$user->name}}</h1>
-@foreach ($threads as $thread)
-    <h2>{{$thread->title}}</h2>
-    <h2>{{$thread->desc}}</h2>
-@endforeach --}}
 
 @extends('layouts.app')
 
@@ -14,22 +9,19 @@
     </div>
 
     <hr class="container">
-<div class="row gap-2">
-@foreach ($threads as $thread)
+<div class="row gap-2 container col-8">
+@foreach ($activities as $date => $activity)
 
-    <div class="card col-md-8 offset-md-2" >
-        <div class="card-body">
-            <h5 class="card-title">{{$thread->title}}</h5>
-            <p class="card-text">{{$thread->desc}}</p>
-            <p>{{$thread->created_at->diffForHumans()}}</p>
-            <a href="{{$thread->path()}}" class="btn btn-primary">View Detail</a>
-        </div>
-    </div>
+    <h2 class="container">{{$date}}</h2>
+
+    @foreach ($activity as $record)
+        @include('profile.showactivity',['activity'=>$record])
+    @endforeach
 
 @endforeach
         <div class="col-md-8 offset-md-2">
 
-            {{$threads->links()}}
+            {{-- {{$threads->links()}} --}}
         </div>
 
 </div>

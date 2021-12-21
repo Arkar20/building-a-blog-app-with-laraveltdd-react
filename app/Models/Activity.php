@@ -2,12 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Activity extends Model
 {
     use HasFactory;
 
-    protected $fillable=['action_type','activity_type','activity_id'];
+    protected $fillable=['action_type','activity_type','activity_id','user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function activity()
+    {
+        return $this->morphTo();
+    }
 }

@@ -9,7 +9,13 @@ class ProfileController extends Controller
 {
   public function index(User $user)
   {
-    $threads=$user->threads()->paginate(5);
-      return view('profile.index',compact('user','threads'));
+
+    $activities=$user->activities()->with('activity')->get()->groupBy(function($activity){
+      return $activity->created_at->format('Y-m-d');
+    });
+
+    // return $activities;
+    
+      return view('profile.index',compact('user','activities'));
   }
 }

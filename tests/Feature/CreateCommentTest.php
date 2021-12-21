@@ -8,6 +8,7 @@ use App\Models\Thread;
 use App\Models\Comment;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 
 class CreateCommentTest extends TestCase
 {
@@ -18,10 +19,23 @@ class CreateCommentTest extends TestCase
      *
      * @return void
      */
+    private $user,$thread;
+
+      public function setUp():void
+      {
+        parent::setUp();
+
+          $this->user=User::factory()->create();
+          
+          $this->thread=Thread::factory()->create(['user_id'=>$this->user->id]);
+
+      }
+   
     public function test_auth_user_can_create_comment()
     {
       $this->withoutExceptionHandling();
-        $user=User::factory()->create();
+       
+      $user=User::factory()->create();
 
         $this->actingAs($user);
         
@@ -39,11 +53,9 @@ class CreateCommentTest extends TestCase
     }
      public function test_title_field_is_required()
     {
-        $user=User::factory()->create();
-
-       $this->actingAs($user);
-
-        $thread=Thread::factory()->create();
+      $this->actingAs($this->user);
+      
+      $thread=Thread::factory()->create();
 
       $comment= Comment::factory()->make(['title'=>null,'thread_id'=>$thread->id]);
 
@@ -54,14 +66,10 @@ class CreateCommentTest extends TestCase
     }
      public function test_guest_cannot_create_comments()
     {
+       $comment=Comment::factory()->make(['thread_id'=>$this->thread->id]);
 
-
-      $thread=  Thread::factory()->create();
-
-        $comment=Comment::factory()->make(['thread_id'=>$thread->id]);
-
-        $response=$this->post('/comments/'.$thread->id,$thread->toArray());  
+        $response=$this->post('/comments/'.$this->thread->id,$this->thread->toArray());  
          
-      $this->assertGuest();
+       $this->assertGuest();
     }
 }
