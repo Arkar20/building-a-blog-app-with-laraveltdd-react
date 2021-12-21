@@ -19,16 +19,20 @@ class ProfileUserTest extends TestCase
 
         $this->get('/profile/'.$user->name)->assertSee($user->name);
     }
-    public function test_profile_page_show_user_threads()
+    public function test_profile_page_show_user_activities()
     {
         $user=User::factory()->create();
 
+        $this->actingAs($user);
+
         $thread=Thread::factory()->create(['user_id'=>$user->id]);
+
+        $threadTitleToSee=$user->activities()->first()->activity->title; //give me the first activity of the user which the creating thread and its title
 
         $this->get('/profile/'.$user->name)
                 ->assertSee($user->name)
-                ->assertSee($thread->title)
-                ->assertSee($thread->desc);
+                ->assertSee($threadTitleToSee);
+                
 
 
     }

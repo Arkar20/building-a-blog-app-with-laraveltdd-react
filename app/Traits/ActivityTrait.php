@@ -7,6 +7,8 @@ trait ActivityTrait{
 
 
    public static function bootActivityTrait(){
+
+    if(auth()->guest()) return;
     
     $events=['created','deleting'];
 

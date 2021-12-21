@@ -21,18 +21,20 @@ class ActivityTest extends TestCase
      */
 
      private $user,$thread;
-    protected function setUp():void{
+    protected function setUp():void
+    {
         parent::setUp();
 
         $this->user=User::factory()->create();
+        $this->actingAs($this->user);
         $this->thread= Thread::factory()->create();
-
-
 
     }
     public function test_user_make_activity_on_creating_threads()
     {
          $this->withoutExceptionHandling();
+
+
 
         $this->assertDatabaseCount('activities',$this->thread->activities->count());
         $this->assertDatabaseHas('activities',[
