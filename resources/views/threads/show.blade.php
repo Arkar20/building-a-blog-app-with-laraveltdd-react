@@ -48,8 +48,21 @@
 
                                 </form>
                             </div>
-                            <div class="card-header">
+                            <div class="card-header d-flex">
+                            <h5 class="flex-grow-1">
                                 {{$comment->title}}
+                            </h5>
+                            @can('delete',$comment)
+                             <form action={{route('comment.delete',$comment->id)}} method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">
+                                          Delete
+                                    </button>
+
+                                </form>
+                        @endcan
+
                             </div>
                         </div>
                         @endforeach

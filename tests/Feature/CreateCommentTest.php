@@ -35,9 +35,8 @@ class CreateCommentTest extends TestCase
     {
       $this->withoutExceptionHandling();
        
-      $user=User::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
         
         $this->withoutExceptionHandling();
 
@@ -71,5 +70,33 @@ class CreateCommentTest extends TestCase
         $response=$this->post('/comments/'.$this->thread->id,$this->thread->toArray());  
          
        $this->assertGuest();
+    }
+    public function test_comment_owner_cannot_delete_commnet()
+    {
+      $this->actingAs($this->user);
+
+      $anotheruser=User::factory()->create();
+
+      $comment=Comment::
+                factory()
+                ->create(['thread_id'=>$this->thread->id,'user_id'=>$anotheruser->id]);
+
+      $response=$this->delete('/comments/'.$this->thread->id.'/delete');
+      
+      $response->assertForbidden();
+
+    }
+    public function test_comment_owner_can_delete_commnet()
+    {
+      $this->actingAs($this->user);
+
+
+      $comment=Comment::
+                factory()
+                ->create(['thread_id'=>$this->thread->id,'user_id'=>$this->user->id]);
+
+      $response=$this->delete('/comments/'.$this->thread->id.'/delete');
+      
+      $this->assertDatabaseCount('comments',0);
     }
 }

@@ -25,7 +25,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::delete('/comments/{comment}/delete',[CommentController::class, 'destroy'])->middleware('auth')->name('comment.delete');
 Route::post('/comments/{thread}',[CommentController::class, 'store']);
+
 Route::post('comments/{comment:id}/favourites',[FavouriteController::class, 'store'])->middleware('auth')->name('comment.favourite');
 Route::get('/threads/create',[ThreadController::class, 'create']);
 

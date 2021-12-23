@@ -84,6 +84,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+
+        if(auth()->user()->cannot('delete',$comment)){
+         return   abort(403);
+        }
+
+        $comment->delete();
+
+      return back();
     }
 }
