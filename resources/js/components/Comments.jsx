@@ -1,23 +1,41 @@
-import React from "react"
+import React, { createContext, useEffect, useReducer } from "react"
+
+import CommentsContainer from "./CommentsContainer"
 import ReactDOM from "react-dom";
-import RegisterComment  from "./RegisterComment";
-const Comments = ({ comments }) => {
-   
+import RegisterComment from "./RegisterComment";
+import { commentsReducer } from "./reducer";
+
+export const CommentContext = createContext();
+
+const Comments = ({thread}) => {
+
+    const [state, dispatch] = useReducer(commentsReducer, []);
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            const { data, error } = await axios.get("/comments/" + thread.id);
+            
+            if (error) return console.log(error)
+            
+            if(data) dispatch({type:"SET_COMMENTS",payload:data})
+        }
+
+        fetchComments();
+    }, [])
+    
+    
+    console.log(state);
+
 
     return (
         <>
+             
+                <CommentContext.Provider value={{ state, dispatch }}>
+                <RegisterComment />
+
+                       <CommentsContainer /> 
+                </CommentContext.Provider>
             
-            <RegisterComment />
-            
-            {comments &&
-                comments.data.map((comment) => (
-                    <div className="card" key={comment.id}>
-                        <div className="card-body">
-                            <div className="card-header">{comment.user.name}</div>
-                            <div className="card-body">{comment.title}</div>
-                        </div>
-                    </div>
-                ))}
         </>
     );
     
@@ -29,10 +47,12 @@ const commentid = document
     .getElementById("comments");
 
 if (commentid) {
-    const comments = JSON.parse(commentid.getAttribute("comments"));
+    const thread = JSON.parse(
+        document.getElementById("comments").getAttribute("thread")
+    );
 
     ReactDOM.render(
-        <Comments comments={comments} />,
+        <Comments thread={thread} />,
         document.getElementById("comments")
     );
 }

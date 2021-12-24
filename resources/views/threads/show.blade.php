@@ -25,7 +25,7 @@
                     <div class="card-footer">
                         {{$thread->created_at->diffForHumans()}}
                     </div>
-                 <h3>Comment Section</h3>
+                 {{-- <h3>Comment Section</h3>
         
                         <form action={{"/comments/$thread->id"}} method="post" >
                                 @csrf
@@ -67,11 +67,11 @@
                         </div>
                         @endforeach
 
-                        {{$comments->links()}}
+                        {{$comments->links()}} --}}
                      
             
 
-               {{-- <div id="comments" comments="{{json_encode($comments)}}"></div> --}}
+               <div id="comments" thread="{{json_encode($thread)}}"></div>
             </div>
 
                     <div class="col-md-4">

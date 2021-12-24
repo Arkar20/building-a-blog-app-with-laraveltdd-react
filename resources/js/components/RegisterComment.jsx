@@ -1,13 +1,15 @@
 import "react-toastify/dist/ReactToastify.css";
 
-import React,{useState} from "react";
+import React,{useContext, useState} from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+import {CommentContext} from './Comments'
 import { ReactDOM } from 'react-dom';
 import axios from "axios";
 
 const RegisterComment = () => {
-
+    const { state, dispatch } = useContext(CommentContext);
+    
     const [title, setTitle] = useState("");
     
 
@@ -19,7 +21,18 @@ const RegisterComment = () => {
         
         if (error) return console.log(error)
         
-        if (data)  toast("Register Successful!");
+        if (data) {
+            toast("Register Successful!");
+            
+             const { data, error } = await axios.get("/comments/31");
+
+             if (error) return console.log(error);
+
+            if (data) dispatch({ type: "SET_COMMENTS", payload: data });
+            
+            setTitle('')
+            
+        };
     }
     return (
         <>
