@@ -11,7 +11,6 @@ const CommentSingle = ({ comment }) => {
         
         const { data }=await axios.delete(`/comments/${comment.id}/delete`).catch(error=>toast("Sorry Cannot Delete"));
 
-            // if (error)  console.log(error.response.status);
 
             if(data) toast("Delete Successful")
 
@@ -29,6 +28,32 @@ const CommentSingle = ({ comment }) => {
         
         
     }
+
+    const handleFavourite = async () => {
+
+        if(comment.is_favourited) return toast("Already Favourited");
+        
+        const { data } = await axios
+            .post(`/comments/${comment.id}/favourites`)
+            .catch((error) => toast("Sorry Cannot Favouirted"));
+        
+        if (data) toast("Favourited Successful");
+
+         const { data: response, err } = await axios.get(
+             "/comments/" + comment.thread.id
+         );
+
+         console.log(response);
+
+         if (err) return console.log(err);
+
+         if (response) dispatch({ type: "SET_COMMENTS", payload: response });
+
+
+        
+    }
+
+   
     return (
         <>
             <div className="card">
@@ -43,7 +68,14 @@ const CommentSingle = ({ comment }) => {
                             Delete
                         </button>
                     </div>
-                    <div className="card-body">{comment.title}</div>
+                    <div className="card-body d-flex">
+                        <p className="flex-grow-1">
+                            {comment.title}
+                        </p>
+                        <button className={comment.is_favourited?'btn btn-primary':'btn btn-light'} onClick={handleFavourite}>
+                            {comment.favourites_count}  Favourite
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

@@ -17,6 +17,8 @@ class Comment extends Model
 
     public $withCount=['favourites'];
 
+    public $appends=['is_favourited'];
+
     protected $fillable=['title','thread_id','user_id'];
 
     public function thread()
@@ -42,5 +44,9 @@ class Comment extends Model
             'user_id'=>auth()->id(),
             'favourited_type'=> get_class($this)
         ]);
+    }
+    public function getisFavouritedAttribute()
+    {
+        return $this->favourites()->where('user_id',auth()->id())->exists();
     }
 }
