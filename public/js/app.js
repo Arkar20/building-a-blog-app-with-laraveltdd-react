@@ -5302,6 +5302,126 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/CommentSingle.jsx":
+/*!***************************************************!*\
+  !*** ./resources/js/components/CommentSingle.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Comments */ "./resources/js/components/Comments.jsx");
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+
+var CommentSingle = function CommentSingle(_ref) {
+  var comment = _ref.comment;
+
+  var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_Comments__WEBPACK_IMPORTED_MODULE_2__.CommentContext),
+      state = _useContext.state,
+      dispatch = _useContext.dispatch;
+
+  var handleDelete = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(e) {
+      var _yield$axios$delete$c, data, _yield$axios$get, response, err;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              _context.next = 3;
+              return axios["delete"]("/comments/".concat(comment.id, "/delete"))["catch"](function (error) {
+                return (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Sorry Cannot Delete");
+              });
+
+            case 3:
+              _yield$axios$delete$c = _context.sent;
+              data = _yield$axios$delete$c.data;
+              // if (error)  console.log(error.response.status);
+              if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Delete Successful");
+              _context.next = 8;
+              return axios.get("/comments/" + comment.thread.id);
+
+            case 8:
+              _yield$axios$get = _context.sent;
+              response = _yield$axios$get.data;
+              err = _yield$axios$get.err;
+              console.log(response);
+
+              if (!err) {
+                _context.next = 14;
+                break;
+              }
+
+              return _context.abrupt("return", console.log(err));
+
+            case 14:
+              if (response) dispatch({
+                type: "SET_COMMENTS",
+                payload: response
+              });
+
+            case 15:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function handleDelete(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "card",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "card-body",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "card-header d-flex ",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h4", {
+            className: "flex-md-grow-1",
+            children: comment.user.name
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            className: "btn btn-danger",
+            onClick: handleDelete,
+            children: "Delete"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "card-body",
+          children: comment.title
+        })]
+      })
+    })
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CommentSingle);
+
+/***/ }),
+
 /***/ "./resources/js/components/Comments.jsx":
 /*!**********************************************!*\
   !*** ./resources/js/components/Comments.jsx ***!
@@ -5354,7 +5474,10 @@ var CommentContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createCo
 var Comments = function Comments(_ref) {
   var thread = _ref.thread;
 
-  var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_1__.useReducer)(_reducer__WEBPACK_IMPORTED_MODULE_5__.commentsReducer, []),
+  var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_1__.useReducer)(_reducer__WEBPACK_IMPORTED_MODULE_5__.commentsReducer, {
+    thread: thread,
+    comments: null
+  }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
@@ -5441,7 +5564,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Comments__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comments */ "./resources/js/components/Comments.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _CommentSingle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CommentSingle */ "./resources/js/components/CommentSingle.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -5453,19 +5577,11 @@ var CommentsContainer = function CommentsContainer() {
       state = _useContext.state,
       dispatch = _useContext.dispatch;
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: state.length ? state.map(function (comment) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        className: "card",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "card-body",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card-header",
-            children: comment.user.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "card-body",
-            children: comment.title
-          })]
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+    children: state.comments ? state.comments.map(function (comment) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("section", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_CommentSingle__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          comment: comment
         })
       }, comment.id);
     }) : "Loading..."
@@ -5545,7 +5661,7 @@ var RegisterComment = function RegisterComment() {
             case 0:
               e.preventDefault();
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_6___default().post("/comments/31", {
+              return axios__WEBPACK_IMPORTED_MODULE_6___default().post("/comments/" + state.thread.id, {
                 title: title
               });
 
@@ -5569,7 +5685,7 @@ var RegisterComment = function RegisterComment() {
 
               (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Register Successful!");
               _context.next = 12;
-              return axios__WEBPACK_IMPORTED_MODULE_6___default().get("/comments/31");
+              return axios__WEBPACK_IMPORTED_MODULE_6___default().get("/comments/" + state.thread.id);
 
             case 12:
               _yield$axios$get = _context.sent;
@@ -5637,13 +5753,13 @@ var RegisterComment = function RegisterComment() {
   \**************************************************/
 /***/ ((module) => {
 
-var commentsReducer = function commentsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
+var commentsReducer = function commentsReducer(state, action) {
   switch (action.type) {
     case "SET_COMMENTS":
-      return action.payload;
+      return {
+        thread: state.thread,
+        comments: action.payload
+      };
 
     default:
       {

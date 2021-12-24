@@ -89,10 +89,14 @@ class CommentController extends Controller
     {
 
         if(auth()->user()->cannot('delete',$comment)){
-         return   abort(403);
+         return  abort(403);
         }
 
         $comment->delete();
+
+        if(request()->wantsJson()){
+            return response()->json(['success'=>'Delete Successful!']);
+        }
 
       return back();
     }

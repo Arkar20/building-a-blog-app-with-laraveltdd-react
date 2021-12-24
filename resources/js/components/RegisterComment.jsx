@@ -17,14 +17,14 @@ const RegisterComment = () => {
         
         e.preventDefault();
         
-        const { data, error } = await axios.post("/comments/31", { title });
+        const { data, error } = await axios.post("/comments/"+state.thread.id, { title });
         
         if (error) return console.log(error)
         
         if (data) {
             toast("Register Successful!");
             
-             const { data, error } = await axios.get("/comments/31");
+             const { data, error } = await axios.get("/comments/"+state.thread.id);
 
              if (error) return console.log(error);
 

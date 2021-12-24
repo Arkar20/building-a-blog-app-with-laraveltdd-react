@@ -9,7 +9,7 @@ export const CommentContext = createContext();
 
 const Comments = ({thread}) => {
 
-    const [state, dispatch] = useReducer(commentsReducer, []);
+    const [state, dispatch] = useReducer(commentsReducer, { thread, comments: null });
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -31,7 +31,7 @@ const Comments = ({thread}) => {
         <>
              
                 <CommentContext.Provider value={{ state, dispatch }}>
-                <RegisterComment />
+                        <RegisterComment />
 
                        <CommentsContainer /> 
                 </CommentContext.Provider>

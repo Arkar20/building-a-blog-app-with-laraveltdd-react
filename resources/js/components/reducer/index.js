@@ -1,10 +1,10 @@
 
 
-const commentsReducer = (state=[] , action) => {
+const commentsReducer = (state , action) => {
     switch (action.type) {
 
         case "SET_COMMENTS": 
-            return action.payload;
+            return {thread:state.thread,comments:action.payload};
         
         default: {
             return state;
