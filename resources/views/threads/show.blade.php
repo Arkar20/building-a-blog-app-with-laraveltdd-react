@@ -25,14 +25,14 @@
                     <div class="card-footer">
                         {{$thread->created_at->diffForHumans()}}
                     </div>
-                  {{-- <h3>Comment Section</h3>
+                 <h3>Comment Section</h3>
         
                         <form action={{"/comments/$thread->id"}} method="post" >
                                 @csrf
                                 <input type="text" class="form-control" name="title">
                                 <button class="btn btn-primary my-2">Comment</button>
-                        </form> --}}
-                       {{--    @foreach ($comments as $comment)
+                        </form> 
+                          @foreach ($comments as $comment)
 
                         <div class="card my-2">
 
@@ -69,9 +69,9 @@
 
                         {{$comments->links()}}
                      
-            --}}
+            
 
-               <div id="comments" comments="{{json_encode($comments)}}"></div>
+               {{-- <div id="comments" comments="{{json_encode($comments)}}"></div> --}}
             </div>
 
                     <div class="col-md-4">

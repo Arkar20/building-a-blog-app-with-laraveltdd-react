@@ -15,4 +15,9 @@ class Favourite extends Model
     {
         return $this->morphMany(Activity::class,'activity');
     }
+     public function favouriteable()
+    {
+        return $this->morphTo();
+    }
+   
 }

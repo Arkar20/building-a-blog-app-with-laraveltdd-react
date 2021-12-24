@@ -14,7 +14,6 @@ class ProfileController extends Controller
       return $activity->created_at->format('Y-m-d');
     });
 
-    // return $activities;
     
       return view('profile.index',compact('user','activities'));
   }
