@@ -32,23 +32,7 @@ class FavouriteReplyTest extends TestCase
 
       
     }
-    public function test_auth_user_can_favourite_a_reply_once()
-    {
-        $this->withoutExceptionHandling();
-        $user=User::factory()->create();
-
-        $this->actingAs($user);
-        
-
-         $reply=Comment::factory()->create();
-
-         $response=$this->post('/comments/'.$reply->id.'/favourites');
-         $response=$this->post('/comments/'.$reply->id.'/favourites');
-
-        $this->assertCount(1,$reply->favourites);
-
-      
-    }
+    
 
      
     public function test_guest_cannot_favourite_any_comment()

@@ -12,10 +12,10 @@ class FavouriteController extends Controller
 
     if(!$comment->favourites()->where('user_id',auth()->id())->exists()){
 
-        $comment->unmarkFavourite();
+        $comment->markFavourite();
     }
     else{
-        $comment->markFavourite();
+        $comment->unmarkFavourite();
 
     }
 
