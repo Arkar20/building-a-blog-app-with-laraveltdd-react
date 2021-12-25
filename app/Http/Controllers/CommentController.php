@@ -6,7 +6,9 @@ use App\Models\Thread;
 use App\Models\Channel;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Providers\DeleteComment;
 use App\Http\Requests\CommentRequest;
+use App\Http\Resources\CommentResource;
 
 class CommentController extends Controller
 {
@@ -51,9 +53,12 @@ class CommentController extends Controller
      */
     public function show(Thread $thread)
     {
-         $comments=$thread->comments()->latest()->get();
+        // $comments=new CommentResource($thread->comments()->latest()->paginate(10));
 
-          return json_encode($comments);
+        return $thread->comments()->latest()->paginate(4);
+
+        // return response()->json($comments);
+
     }
 
     /**
@@ -92,7 +97,11 @@ class CommentController extends Controller
          return  abort(403);
         }
 
+
+
         $comment->delete();
+
+
 
         if(request()->wantsJson()){
             return response()->json(['success'=>'Delete Successful!']);

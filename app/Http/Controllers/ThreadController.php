@@ -8,6 +8,7 @@ use App\Models\Channel;
 use Illuminate\Http\Request;
 use App\Http\Requests\ThreadRequest;
  use App\Filters\ThreadFilter;
+use App\Http\Resources\CommentResource;
 
 class ThreadController extends Controller
 {
@@ -79,7 +80,7 @@ class ThreadController extends Controller
      
         $thread=Thread::where('channel_id',$channel->id)->where('id',$threadid)->first();
 
-        $comments=$thread->comments()->paginate(10);
+        $comments=new CommentResource($thread->comments()->paginate(10));
 
         // return $comments;
    

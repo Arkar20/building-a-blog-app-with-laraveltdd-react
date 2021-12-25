@@ -19,6 +19,15 @@ class Comment extends Model
 
     public $appends=['is_favourited'];
 
+    // protected static function boot(){
+    //     parent::boot();
+    //     static::deleting(function($model){
+            
+    //         return  $model->favourites->each->delete();
+
+    //     });
+    // }
+
     protected $fillable=['title','thread_id','user_id'];
 
     public function thread()

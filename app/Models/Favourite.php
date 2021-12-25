@@ -11,6 +11,16 @@ class Favourite extends Model
     use HasFactory,ActivityTrait;
 
     protected $fillable=['user_id','favouriteable_id','favouriteable_type'];
+
+    protected static function boot(){
+        parent::boot();
+        static::deleting(function($model){
+            
+            return  $model->activities->each->delete();
+
+        });
+    }
+
      public function activities()
     {
         return $this->morphMany(Activity::class,'activity');

@@ -31,6 +31,15 @@ class Thread extends Model
         return $this->comments()->count();
     }
 
+    public static function boot(){
+        parent::boot();
+        static::deleting(function($model){
+                   return $model->comments->each->delete();
+
+
+        });
+    }
+
     
 
     //! relatonships 

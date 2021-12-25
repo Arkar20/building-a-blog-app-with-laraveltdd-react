@@ -46,7 +46,9 @@ class CreateCommentTest extends TestCase
 
         $response=$this->post('/comments/'.$thread->id,$comment->toArray());
 
-        $this->get($thread->path())->assertSee($comment->title);
+        $this->get($thread->path());
+        
+        $this->assertDatabaseHas('comments',['title'=>$comment->title]);
 
 
     }
