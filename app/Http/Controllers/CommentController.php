@@ -40,7 +40,7 @@ class CommentController extends Controller
      */
     public function store(Thread $thread,CommentRequest $request)
     {
-        $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);
+        $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
 
         return back();
     }
@@ -53,7 +53,8 @@ class CommentController extends Controller
      */
     public function show(Thread $thread)
     {
-    $comments= CommentResource::collection($thread->comments()->latest()->paginate(4));
+     $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
+
 
         return $comments;
 

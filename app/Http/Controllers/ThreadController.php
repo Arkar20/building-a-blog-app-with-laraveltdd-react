@@ -37,9 +37,10 @@ class ThreadController extends Controller
    
 
         if(request()->wantsJson()){
-          
-            return $threads->get();
+            return response()->json($threads->get());
         }
+
+        // return $threads->get();
         $threads=$threads->with('channel')->latest()->paginate();
 
        return view('threads.index',compact('threads'));

@@ -101,4 +101,34 @@ class CreateCommentTest extends TestCase
       
       $this->assertDatabaseCount('comments',0);
     }
+    public function test_comment_has_to_be_increased_in_threads_every_time_created()
+    {
+
+      $this->withoutExceptionHandling();
+
+      $this->actingAs($this->user);
+      $thread=Thread::factory()->create();
+       $comment=Comment::
+                factory()
+                ->make(['thread_id'=>$thread->id,'user_id'=>$this->user->id]);
+
+      $response=$this->post('/comments/'.$thread->id,$comment->toArray());
+
+      $this->assertEquals(1,$thread->fresh()->comments_count);
+    }
+    public function test_comment_has_to_be_decreased_in_threads_every_time_created()
+    {
+
+      $this->withoutExceptionHandling();
+
+      $this->actingAs($this->user);
+      $thread=Thread::factory()->create();
+       $comment=Comment::
+                factory()
+                ->make(['thread_id'=>$thread->id,'user_id'=>$this->user->id]);
+
+      $response=$this->post('/comments/'.$thread->id,$comment->toArray());
+
+      $this->assertEquals(1,$thread->fresh()->comments_count);
+    }
 }

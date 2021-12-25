@@ -25,7 +25,7 @@
             </div>
             
         @endforeach
-        {{$threads->links()}}
+        {{$threads->withQueryString()->links()}}
 </div>
     
 @endsection

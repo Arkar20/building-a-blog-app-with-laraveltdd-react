@@ -38,6 +38,8 @@ class Thread extends Model
 
 
         });
+
+       
     }
 
     

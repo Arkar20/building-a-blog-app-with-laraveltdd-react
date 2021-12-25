@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ThreadFilter extends Filter{
 
-    protected $filters=['by','popular'];
+    protected $filters=['by','popular','uncomment'];
 
     public function by($username,$query)
     {
@@ -21,7 +21,12 @@ class ThreadFilter extends Filter{
     }
     public function popular($filter,$query)
     {
-          return $query->withCount('comments')->orderBy('comments_count','desc');
+          return $query->orderBy('comments_count','desc');
+
+    }         
+    public function uncomment($filter,$query)
+    {
+          return   $query->where('comments_count',0);
 
             
     }

@@ -93,4 +93,20 @@ class ThreadTest extends TestCase
 
 
     }
+    public function test_thread_can_be_filtered_by_unanswered_threads()
+    {
+
+        $this->withoutExceptionHandling();
+
+        $thread=Thread::factory()->create();
+       $threadwithcomments=Comment::factory()->create(['thread_id'=>$thread->id]);
+       
+
+        $threadnocomment=Thread::factory()->create();
+
+
+        $this->assertCount(1,$thread->comments);
+
+      
+    }
 }
