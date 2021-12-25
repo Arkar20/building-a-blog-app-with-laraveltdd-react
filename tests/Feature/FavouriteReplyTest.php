@@ -63,4 +63,26 @@ class FavouriteReplyTest extends TestCase
 
       
     }
+     public function test_auth_user_can_unfavourite_the_reply()
+    {
+        $this->withoutExceptionHandling();
+        $user=User::factory()->create();
+
+        $this->actingAs($user);
+        
+
+         $reply=Comment::factory()->create();
+
+
+         //* favourites the comment
+         $response=$this->post('/comments/'.$reply->id.'/favourites');
+
+         //*unfavourites the comment
+         $response=$this->post('/comments/'.$reply->id.'/favourites');
+         
+
+        $this->assertCount(0,$reply->favourites);
+
+      
+    }
 }

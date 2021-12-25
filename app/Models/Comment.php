@@ -62,6 +62,10 @@ class Comment extends Model
             'favourited_type'=> get_class($this)
         ]);
     }
+    public function unmarkFavourite()
+    {
+      return $this->favourites()->where('user_id',auth()->id())->delete();
+    }
     public function getisFavouritedAttribute()
     {
         return $this->favourites()->where('user_id',auth()->id())->exists();
