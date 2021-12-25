@@ -5393,53 +5393,44 @@ var CommentSingle = function CommentSingle(_ref) {
   }();
 
   var handleFavourite = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(e) {
       var _yield$axios$post$cat, data, _yield$axios$get2, response, err;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              if (!comment.is_favourited) {
-                _context2.next = 2;
-                break;
-              }
-
-              return _context2.abrupt("return", (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Already Favourited"));
-
-            case 2:
-              _context2.next = 4;
+              _context2.next = 2;
               return axios.post("/comments/".concat(comment.id, "/favourites"))["catch"](function (error) {
                 return (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Sorry Cannot Favouirted");
               });
 
-            case 4:
+            case 2:
               _yield$axios$post$cat = _context2.sent;
               data = _yield$axios$post$cat.data;
-              if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Favourited Successful");
-              _context2.next = 9;
-              return axios.get("/comments/" + comment.thread.id);
+              if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)(data.message);
+              _context2.next = 7;
+              return axios.get("/comments/" + comment.threadid);
 
-            case 9:
+            case 7:
               _yield$axios$get2 = _context2.sent;
               response = _yield$axios$get2.data;
               err = _yield$axios$get2.err;
-              console.log(response);
 
               if (!err) {
-                _context2.next = 15;
+                _context2.next = 12;
                 break;
               }
 
               return _context2.abrupt("return", console.log(err));
 
-            case 15:
+            case 12:
               if (response) dispatch({
                 type: "SET_COMMENTS",
                 payload: response
               });
 
-            case 16:
+            case 13:
             case "end":
               return _context2.stop();
           }
@@ -5447,7 +5438,7 @@ var CommentSingle = function CommentSingle(_ref) {
       }, _callee2);
     }));
 
-    return function handleFavourite() {
+    return function handleFavourite(_x2) {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -5730,7 +5721,7 @@ var Paginator = function Paginator() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("nav", {
     "aria-label": "Page navigation example",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
-      "class": "pagination",
+      className: "pagination",
       children: state.comments && state.comments.meta.links.map(function (link, index) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
           className: link.active ? "page-item active" : 'page-item',

@@ -25,6 +25,8 @@ class CommentResource extends ResourceCollection
             'title'=>$this->comment->title,
             'ownername'=>$this->comment->user->name,
             'permission_to_delete'=> $this->comment->user->id === auth()->id(),
+            'is_favourited'=> $this->comment->favourites()->where('user_id',auth()->id())->exists(),
+            'favourites_count'=>$this->comment->favourites_count,
             'humantime'=>$this->comment->created_at->diffForHumans(),
             'created_at'=>$this->comment->created_at->format('d/m/y'),
             'threadid'=>$this->comment->thread->id

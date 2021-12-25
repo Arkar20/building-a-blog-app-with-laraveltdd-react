@@ -29,21 +29,20 @@ const CommentSingle = ({ comment }) => {
         
     }
 
-    const handleFavourite = async () => {
+    const handleFavourite = async (e) => {
 
-        if(comment.is_favourited) return toast("Already Favourited");
         
         const { data } = await axios
             .post(`/comments/${comment.id}/favourites`)
             .catch((error) => toast("Sorry Cannot Favouirted"));
+
         
-        if (data) toast("Favourited Successful");
+        if (data) toast(data.message);
 
          const { data: response, err } = await axios.get(
-             "/comments/" + comment.thread.id
+             "/comments/" + comment.threadid
          );
 
-         console.log(response);
 
          if (err) return console.log(err);
 
