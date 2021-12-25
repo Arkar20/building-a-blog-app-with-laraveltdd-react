@@ -53,11 +53,11 @@ class CommentController extends Controller
      */
     public function show(Thread $thread)
     {
-        // $comments=new CommentResource($thread->comments()->latest()->paginate(10));
+    $comments= CommentResource::collection($thread->comments()->latest()->paginate(4));
 
-        return $thread->comments()->latest()->paginate(4);
+        return $comments;
 
-        // return response()->json($comments);
+        
 
     }
 

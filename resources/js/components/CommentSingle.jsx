@@ -16,7 +16,7 @@ const CommentSingle = ({ comment }) => {
 
 
               const { data:response, err } = await axios.get(
-                  "/comments/" + comment.thread.id
+                  "/comments/" + comment.threadid
               );
         
                 console.log(response)
@@ -59,14 +59,14 @@ const CommentSingle = ({ comment }) => {
             <div className="card">
                 <div className="card-body">
                     <div className="card-header d-flex ">
-                        <h4 className="flex-md-grow-1">{comment.user.name}</h4>
-                        <button
+                        <h4 className="flex-md-grow-1">{comment.ownername}</h4>
+                     {comment.permission_to_delete &&   <button
                             type="button"
                             className="btn btn-danger"
                             onClick={handleDelete}
                         >
                             Delete
-                        </button>
+                        </button>}
                     </div>
                     <div className="card-body d-flex">
                         <p className="flex-grow-1">

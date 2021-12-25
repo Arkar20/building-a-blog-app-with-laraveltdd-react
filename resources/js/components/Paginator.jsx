@@ -18,9 +18,9 @@ const Paginator = () => {
         <nav aria-label="Page navigation example">
             
             <ul class="pagination">
-                {state.comments && state.comments.links.map((link) => {
+                {state.comments && state.comments.meta.links.map((link,index) => {
                     return (
-                        <li className={link.active&&"page-item active"}>
+                        <li key={index} className={link.active?"page-item active":'page-item'}>
                             <button className="page-link" onClick={()=>handlePaginate(link.url)}>
                                 {link.label}
                             </button>

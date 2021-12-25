@@ -5358,7 +5358,7 @@ var CommentSingle = function CommentSingle(_ref) {
               data = _yield$axios$delete$c.data;
               if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Delete Successful");
               _context.next = 8;
-              return axios.get("/comments/" + comment.thread.id);
+              return axios.get("/comments/" + comment.threadid);
 
             case 8:
               _yield$axios$get = _context.sent;
@@ -5461,8 +5461,8 @@ var CommentSingle = function CommentSingle(_ref) {
           className: "card-header d-flex ",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h4", {
             className: "flex-md-grow-1",
-            children: comment.user.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            children: comment.ownername
+          }), comment.permission_to_delete && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
             type: "button",
             className: "btn btn-danger",
             onClick: handleDelete,
@@ -5731,9 +5731,9 @@ var Paginator = function Paginator() {
     "aria-label": "Page navigation example",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
       "class": "pagination",
-      children: state.comments && state.comments.links.map(function (link) {
+      children: state.comments && state.comments.meta.links.map(function (link, index) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: link.active && "page-item active",
+          className: link.active ? "page-item active" : 'page-item',
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             className: "page-link",
             onClick: function onClick() {
@@ -5741,7 +5741,7 @@ var Paginator = function Paginator() {
             },
             children: link.label
           })
-        });
+        }, index);
       })
     })
   });

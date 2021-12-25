@@ -24,6 +24,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "query-string": "^7.0.1",
         "react-toastify": "^8.1.0"
     }
 }

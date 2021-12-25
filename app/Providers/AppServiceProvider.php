@@ -7,7 +7,10 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\ServiceProvider;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,5 +45,6 @@ class AppServiceProvider extends ServiceProvider
 
             //  Model::preventLazyLoading(!$this->app->isProduction());
              Paginator::useBootstrap();
+
     }
 }
