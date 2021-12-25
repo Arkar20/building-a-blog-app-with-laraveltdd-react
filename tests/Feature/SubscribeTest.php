@@ -17,22 +17,25 @@ class SubscribeTest extends TestCase
      *
      * @return void
      */
-    // public function test_auth_user_can_subscribe_to_a_thread()
-    // {
-    //     $this->withoutExceptionHandling();
+    public function test_auth_user_can_subscribe_to_a_thread()
+    {
+        $this->withoutExceptionHandling();
 
-    //     $user=User::factory()->create();
+        $user=User::factory()->create();
 
-    //     $this->actingAs($user);
+        $this->actingAs($user);
 
-    //     $thread=Thread::factory()->create();
+        $thread=Thread::factory()->create();
 
-    //     //*hit some url to subscribe
-    //     $this->post(`/thread/{$thread->id}/subscribe`);
+        //*hit some url to subscribe
+        $this->post('/thread/'.$thread->id.'/subscribe');
 
-    //     //*see the subscriptions count of the thread to 1
-    //     $this->assertDatabaseCount(1,$thread->subscriptions);
+        //*see the subscriptions count of the thread to 1
+        $this->assertDatabaseHas('thread_subscriptions',[
+            'user_id'=>auth()->id(),
+            'thread_id'=>$thread->id
+        ]);
 
 
-    // }
+    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\ThreadSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,7 @@ Route::get('/threads/{channel:name}/{thread:id}',[ThreadController::class, 'show
 
 
 Route::get('/profile/{user:name}',[ProfileController::class,'index'])->name('profile');
+
+
+
+Route::post('thread/{thread:id}/subscribe',[ThreadSubscriptionController::class,'store']);

@@ -7,6 +7,7 @@ use App\Models\Channel;
 use App\Models\Comment;
 use App\Models\Activity;
 use App\Traits\ActivityTrait;
+use App\Models\ThreadSubscription;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,7 +21,7 @@ class Thread extends Model
 
     public $withCount=['comments'];
 
-
+    //!helpers
     public function path()
     {
         return '/threads/'. $this->channel->name.'/'.$this->id;
@@ -31,6 +32,8 @@ class Thread extends Model
         return $this->comments()->count();
     }
 
+
+    //!lifecycle
     public static function boot(){
         parent::boot();
         static::deleting(function($model){
@@ -62,6 +65,10 @@ class Thread extends Model
     {
         return $this->morphMany(Activity::class,'activity');
     }
+    public function subscriptions()
+    {
+        return $this->hasMany(ThreadSubscription::class);
+    }
 
 
 
@@ -69,5 +76,14 @@ class Thread extends Model
     public function scopeFilter($query,$filters)
     {
         return $filters->apply($query);
+    }
+
+    //! functions
+    public function subscribe()
+    {
+        return $this->subscriptions()->create([
+            'user_id'=>auth()->id(),
+            'thread_id'=>$this->id
+        ]);
     }
 }
