@@ -11,7 +11,7 @@
                         </h1>
 
                         @can('update',$thread)
-                        <form action="{{$thread->path()}}}" method="post">
+                        <form action={{route('thread.delete',$thread->id)}} method="post">
                                 @csrf
                                 @method('DELETE')
                                  <button type="submit" class="btn btn-danger">Delete</button>

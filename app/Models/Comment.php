@@ -19,19 +19,16 @@ class Comment extends Model
 
     public $appends=['is_favourited'];
 
-    protected static function boot(){
+     protected static function boot(){
         parent::boot();
-        // static::deleting(function($model){
-            
-        //     return  $model->favourites->each->delete();
-
-        // });
+        
          static::created(function($model){
         
             return $model->thread->increment('comments_count');
         });
         static::deleted(function($model){
-        
+            
+                    $model->favourites->each->delete();
             return $model->thread->decrement('comments_count');
         });
     }

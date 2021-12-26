@@ -16,8 +16,8 @@ class CreateThreadsTable extends Migration
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
             $table->string('title',100);
-            $table->foreignId('user_id')->constrained()->onDelete(null);
-            $table->foreignId('channel_id')->constrained()->onDelete(null);
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('channel_id')->constrained();
             $table->bigInteger('comments_count')->default(0);
             $table->string('desc');
             $table->timestamps();

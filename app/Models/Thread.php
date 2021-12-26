@@ -40,16 +40,7 @@ class Thread extends Model
 
 
     //!lifecycle
-    public static function boot(){
-        parent::boot();
-        static::deleting(function($model){
-                   return $model->comments->each->delete();
-
-
-        });
-
-       
-    }
+   
 
     
 
