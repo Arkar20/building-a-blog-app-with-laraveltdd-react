@@ -32,5 +32,23 @@ class SubscribionThreadTest extends TestCase
 
 
     }
+    public function test_thread_unsubscribe_fun()
+    {
+       $this->withoutExceptionHandling();
+
+        $user=User::factory()->create();
+
+        $this->actingAs($user);
+
+        $thread=Thread::factory()->create();
+
+        $thread->subscribe(); //! subscrube first 
+
+        $thread->unsubscribe(); //* target fun to test
+
+        $this->assertEquals(0,$thread->subscriptions()->count());
+
+
+    }
   
 }
