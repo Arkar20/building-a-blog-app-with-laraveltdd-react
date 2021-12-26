@@ -6,12 +6,13 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
+use Psy\Exception\ErrorException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ThreadValidationTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithFaker;
     /**
      * A basic feature test example.
      *
@@ -38,7 +39,6 @@ class ThreadValidationTest extends TestCase
 
        $this->actingAs($user);
 
-
       $thread= Thread::factory()->make(['desc'=>null]);
 
       $response=$this->post('/threads',$thread->toArray());
@@ -49,15 +49,20 @@ class ThreadValidationTest extends TestCase
      public function test_thread_channel_id_field_is_required()
     {
 
-       $user=User::factory()->create();
+         $user=User::factory()->create();
 
-       $this->actingAs($user);
+        $this->actingAs($user);
+        
 
-      $thread= Thread::factory()->make(['channel_id'=>null]);
+            $response=$this->post('/threads',[
+              'title'=>$this->faker->sentence,
+              'desc'=>$this->faker->sentence,
+              'user_id'=>auth()->id(),
+              'channel_id'=>null
+            ]);
 
-      $response=$this->post('/threads',$thread->toArray());
-
-      $response->assertSessionHasErrors('channel_id');
+        $response->assertSessionHasErrors('channel_id');
+       
        
     }
      public function test_thread_channel_id_field_has_to_be_exists_to_register_in_Thread()
@@ -67,9 +72,13 @@ class ThreadValidationTest extends TestCase
 
        $this->actingAs($user);
 
-      $thread= Thread::factory()->make(['channel_id'=>2]);
 
-      $response=$this->post('/threads',$thread->toArray());
+      $response=$this->post('/threads',[
+              'title'=>$this->faker->sentence,
+              'desc'=>$this->faker->sentence,
+              'user_id'=>auth()->id(),
+              'channel_id'=>1
+            ]);
 
       $response->assertSessionHasErrors('channel_id');
        

@@ -23,7 +23,6 @@ class ThreadController extends Controller
      */
     public function index(Channel $channel=null,ThreadFilter $filters)
     {
-        // dd($channel);
         if($channel){
         
             $threads=$channel->threads();
@@ -64,8 +63,8 @@ class ThreadController extends Controller
      */
     public function store( ThreadRequest $request)
     {
-        Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc'),'user_id'=>auth()->id(),'channel_id'=>$request->channel_id]);
-
+        $thread=Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc'),'user_id'=>auth()->id(),'channel_id'=>$request->channel_id]);
+       
         return redirect('/threads')->with('success','Thread Has Created');
     }
 
