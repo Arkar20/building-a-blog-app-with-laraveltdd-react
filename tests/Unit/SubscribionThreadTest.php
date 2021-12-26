@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\TestCase;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -32,4 +32,5 @@ class SubscribionThreadTest extends TestCase
 
 
     }
+  
 }

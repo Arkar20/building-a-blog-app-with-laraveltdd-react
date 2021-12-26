@@ -10,18 +10,22 @@ export const CommentContext = createContext();
 const Comments = ({thread}) => {
 
     const [state, dispatch] = useReducer(commentsReducer, { thread, comments: null });
-
+    
+    let currentpage = window.location.href.split("page=")[1].split("&")[0];
+    
     useEffect(() => {
         const fetchComments = async () => {
-            const { data, error } = await axios.get("/comments/" + thread.id);
             
-            if (error) return console.log(error)
-            
-            if(data) dispatch({type:"SET_COMMENTS",payload:data})
-        }
+            const apitoFetch = currentpage ? thread.path + "?page="+currentpage : thread.path;
+            const { data, error } = await axios.get(apitoFetch);
+
+            if (error) return console.log(error);
+
+            if (data) dispatch({ type: "SET_COMMENTS", payload: data });
+        };
 
         fetchComments();
-    }, [])
+    }, []);
     
     
     console.log(state);

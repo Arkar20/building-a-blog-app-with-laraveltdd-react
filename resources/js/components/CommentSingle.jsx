@@ -24,8 +24,6 @@ const CommentSingle = ({ comment }) => {
               if (err) return console.log(err);
 
               if (response) dispatch({ type: "SET_COMMENTS", payload: response });
-
-        
         
     }
 

@@ -81,10 +81,11 @@ class ThreadController extends Controller
      
         $thread=Thread::where('channel_id',$channel->id)->where('id',$threadid)->first();
 
-        $comments=new CommentResource($thread->comments()->paginate(10));
+     $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
 
-        // return $comments;
-   
+        if(request()->wantsJson()){
+            return $comments;
+        }
 
         return view('threads.show',compact('thread','comments'));
     }

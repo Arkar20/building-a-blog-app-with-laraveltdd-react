@@ -83,7 +83,12 @@
                                 </p>
                             </div>
                         </div>
+                         <form class="m-2" action="{{route('thread.subscribe',$thread->id)}}" method="POST">
+                            @csrf
+                            <button class="btn btn-primary">Subscribe</button>
+                         </form>
                     </div>
+                   
             </div> 
 
             

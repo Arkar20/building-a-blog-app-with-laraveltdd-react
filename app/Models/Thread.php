@@ -21,6 +21,8 @@ class Thread extends Model
 
     public $withCount=['comments'];
 
+    public $appends=['path'];
+
     //!helpers
     public function path()
     {
@@ -30,6 +32,10 @@ class Thread extends Model
     public function getCommentsCountAttribute()
     {
         return $this->comments()->count();
+    }
+    public function getPathAttribute()
+    {
+        return $this->path();   
     }
 
 

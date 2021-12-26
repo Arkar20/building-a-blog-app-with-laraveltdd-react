@@ -29,7 +29,8 @@ class CommentResource extends ResourceCollection
             'favourites_count'=>$this->comment->favourites_count,
             'humantime'=>$this->comment->created_at->diffForHumans(),
             'created_at'=>$this->comment->created_at->format('d/m/y'),
-            'threadid'=>$this->comment->thread->id
+            'threadid'=>$this->comment->thread->id,
+            'path'=>$this->comment->thread->path()
         ];
     }
 

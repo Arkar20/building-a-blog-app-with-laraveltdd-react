@@ -44,4 +44,4 @@ Route::get('/profile/{user:name}',[ProfileController::class,'index'])->name('pro
 
 
 
-Route::post('thread/{thread:id}/subscribe',[ThreadSubscriptionController::class,'store']);
+Route::post('thread/{thread:id}/subscribe',[ThreadSubscriptionController::class,'store'])->name('thread.subscribe');

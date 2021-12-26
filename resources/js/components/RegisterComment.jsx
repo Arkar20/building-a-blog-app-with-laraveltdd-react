@@ -1,6 +1,6 @@
 import "react-toastify/dist/ReactToastify.css";
 
-import React,{useContext, useState} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import {CommentContext} from './Comments'
@@ -23,9 +23,10 @@ const RegisterComment = () => {
         if (error) return console.log(error)
         
         if (data) {
+            
             toast("Register Successful!");
             
-             const { data, error } = await axios.get("/comments/"+state.thread.id);
+             const { data, error } = await axios.get(state.thread.path);
 
              if (error) return console.log(error);
 
@@ -35,6 +36,7 @@ const RegisterComment = () => {
             
         };
     }
+    
     return (
         <>
             <ToastContainer />

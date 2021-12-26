@@ -5539,37 +5539,39 @@ var Comments = function Comments(_ref) {
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
+  var currentpage = window.location.href.split("page=")[1].split("&")[0];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var fetchComments = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _yield$axios$get, data, error;
+        var apitoFetch, _yield$axios$get, data, error;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios.get("/comments/" + thread.id);
+                apitoFetch = currentpage ? thread.path + "?page=" + currentpage : thread.path;
+                _context.next = 3;
+                return axios.get(apitoFetch);
 
-              case 2:
+              case 3:
                 _yield$axios$get = _context.sent;
                 data = _yield$axios$get.data;
                 error = _yield$axios$get.error;
 
                 if (!error) {
-                  _context.next = 7;
+                  _context.next = 8;
                   break;
                 }
 
                 return _context.abrupt("return", console.log(error));
 
-              case 7:
+              case 8:
                 if (data) dispatch({
                   type: "SET_COMMENTS",
                   payload: data
                 });
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -5837,7 +5839,7 @@ var RegisterComment = function RegisterComment() {
 
               (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Register Successful!");
               _context.next = 12;
-              return axios__WEBPACK_IMPORTED_MODULE_6___default().get("/comments/" + state.thread.id);
+              return axios__WEBPACK_IMPORTED_MODULE_6___default().get(state.thread.path);
 
             case 12:
               _yield$axios$get = _context.sent;
