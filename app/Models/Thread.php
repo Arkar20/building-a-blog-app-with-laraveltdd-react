@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Activity;
 use App\Traits\ActivityTrait;
 use App\Models\ThreadSubscription;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -40,12 +41,19 @@ class Thread extends Model
 
 
     //!lifecycle
-    public static function boot(){
+    protected static function boot(){
         parent::boot();
-        static::deleting(function($model){
-                   return $model->comments->each->delete();
 
+        static::created(function($model){
 
+            Log::info("Therad is creating");
+        });
+        static::deleted(function($model){
+            
+            Log::info("Therad is deleted and commeting will be deleted");
+
+               $model->comments->each->delete();
+            
         });
 
        

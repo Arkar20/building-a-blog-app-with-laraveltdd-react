@@ -78,15 +78,15 @@ class ThreadController extends Controller
     {
 
      
-        $thread=Thread::where('channel_id',$channel->id)->where('id',$threadid)->first();
+        $thread=Thread::findOrFail($threadid);
+        $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
 
-     $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
-
+        // dd($comments);
         if(request()->wantsJson()){
             return $comments;
         }
 
-        return view('threads.show',compact('thread','comments'));
+        return view('threads.show',compact('thread'));
     }
 
     /**
@@ -118,12 +118,13 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Channel $channel,Thread $thread)
+    public function destroy(Thread $thread)
     {
        if(auth()->user()->cannot('update',$thread)){
            abort(403);
        }
-        $thread->delete();
+             $thread->comments->each->delete();
+          $thread->delete();
 
         return redirect('/threads');
     }

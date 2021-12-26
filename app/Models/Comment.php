@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Thread;
 use App\Models\Favourite;
 use App\Traits\ActivityTrait;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,20 +20,22 @@ class Comment extends Model
 
     public $appends=['is_favourited'];
 
-    protected static function boot(){
+     protected static function boot(){
         parent::boot();
-        // static::deleting(function($model){
-            
-        //     return  $model->favourites->each->delete();
-
-        // });
+        
          static::created(function($model){
         
             return $model->thread->increment('comments_count');
         });
-        static::deleted(function($model){
-        
+         static::deleting(function($model){
+            Log::info("Decrementing the comment count in thread");
             return $model->thread->decrement('comments_count');
+        });
+        static::deleted(function($model){
+            Log::info("Comment is deleted and reduce the comment count in thread");
+            
+                    $model->favourites->each->delete();
+             $model->thread && $model->thread->decrement('comments_count');
         });
     }
 
