@@ -38,7 +38,7 @@ class SubscribeTest extends TestCase
 
 
     }
-      public function test_auth_user_can_subscribe_to_a_thread_only_once()
+      public function test_auth_user_can_unsubscribe_to_a_thread()
     {
 
         $user=User::factory()->create();
@@ -52,8 +52,9 @@ class SubscribeTest extends TestCase
         $this->post('/thread/'.$thread->id.'/subscribe'); //! second subscription
 
 
-        $this->assertEquals(1,$thread->subscriptions()->count());
+        $this->assertEquals(0,$thread->subscriptions()->count());
 
 
     }
+     
 }

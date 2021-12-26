@@ -92,4 +92,8 @@ class Thread extends Model
             'thread_id'=>$this->id
         ]);
     }
+    public function unsubscribe()
+    {
+        return $this->subscriptions()->where('user_id',auth()->id())->delete();
+    }
 }

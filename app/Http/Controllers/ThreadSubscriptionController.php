@@ -10,7 +10,12 @@ class ThreadSubscriptionController extends Controller
     public function store(Thread $thread)
     {
         if(!$thread->subscriptions()->where('user_id',auth()->id())->exists())
-            $thread->subscribe();
+        {
+                $thread->subscribe();
+        }
+        else{
+            $thread->unsubscribe();
+        }
 
         return back();
     }

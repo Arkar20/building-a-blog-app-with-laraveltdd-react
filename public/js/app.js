@@ -5539,7 +5539,10 @@ var Comments = function Comments(_ref) {
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
-  var currentpage = window.location.href.split("page=")[1].split("&")[0];
+  var currentUrl = window.location.href; //* if the url contains page, grap the page number
+
+  var currentpage = currentUrl.includes("page") && currentUrl.split("page=")[1].split("&")[0]; // var currentpage = window.location.href.match(/[?&]page=([^&]+)/);
+
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var fetchComments = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {

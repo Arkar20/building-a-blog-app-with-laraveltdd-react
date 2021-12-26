@@ -10,8 +10,13 @@ export const CommentContext = createContext();
 const Comments = ({thread}) => {
 
     const [state, dispatch] = useReducer(commentsReducer, { thread, comments: null });
-    
-    let currentpage = window.location.href.split("page=")[1].split("&")[0];
+    var currentUrl = window.location.href;
+
+    //* if the url contains page, grap the page number
+    let currentpage =currentUrl.includes("page")&& currentUrl.split("page=")[1].split("&")[0];
+
+
+    // var currentpage = window.location.href.match(/[?&]page=([^&]+)/);
     
     useEffect(() => {
         const fetchComments = async () => {
