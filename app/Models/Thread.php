@@ -93,10 +93,13 @@ class Thread extends Model
     }
 
     //! functions
-    public function subscribe()
+    public function subscribe($userId=0)
     {
+
+        $id=$userId?:auth()->id();
+
         return $this->subscriptions()->create([
-            'user_id'=>auth()->id(),
+            'user_id'=>$id,
             'thread_id'=>$this->id
         ]);
     }

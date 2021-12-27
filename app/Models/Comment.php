@@ -8,6 +8,7 @@ use App\Models\Favourite;
 use App\Traits\ActivityTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\CommentNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
@@ -25,7 +26,13 @@ class Comment extends Model
         
          static::created(function($model){
         
-            return $model->thread->increment('comments_count');
+             $model->thread->increment('comments_count');
+
+                    $subscripedusersId=$model->thread->subscriptions->pluck('user_id');
+                    $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){
+                        return $users->each->notify(new CommentNotification);
+                    });
+
         });
          static::deleting(function($model){
             Log::info("Decrementing the comment count in thread");

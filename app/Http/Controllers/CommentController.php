@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
 use App\Models\Comment;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Providers\DeleteComment;
 use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
+use App\Notifications\CommentNotification;
 
 class CommentController extends Controller
 {
@@ -42,6 +44,13 @@ class CommentController extends Controller
     {
         $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
 
+        //*grap all the subscribed users to the thread
+           $subscripedusersId=$thread->subscriptions->pluck('user_id');// configuring the users id in subscriptions table
+
+            $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){ //find and sending notifications
+                return $users->each->notify(new CommentNotification);
+            });
+
         return back();
     }
 
@@ -53,7 +62,7 @@ class CommentController extends Controller
      */
     public function show(Thread $thread)
     {
-     $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
+          $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
 
 
         return $comments;

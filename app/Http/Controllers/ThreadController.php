@@ -79,14 +79,15 @@ class ThreadController extends Controller
 
      
         $thread=Thread::findOrFail($threadid);
-        $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
-
+        $comments=$thread->comments()->paginate(20);
         // dd($comments);
         if(request()->wantsJson()){
+            $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
+
             return $comments;
         }
 
-        return view('threads.show',compact('thread'));
+        return view('threads.show',compact('thread','comments'));
     }
 
     /**

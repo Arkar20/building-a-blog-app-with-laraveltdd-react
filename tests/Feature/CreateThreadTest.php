@@ -58,9 +58,9 @@ class CreateThreadTest extends TestCase
       
       $threadNotByLoginUser=Thread::factory()->create();
 
-      $this->delete($threadToDeleteByLoginUser->path());
+      $this->delete('/threads/'.$threadToDeleteByLoginUser->id);
 
-      $this->delete($threadNotByLoginUser->path());
+      $this->delete('/threads/'.$threadNotByLoginUser->id);
 
         $this->assertDatabaseMissing('threads',$threadToDeleteByLoginUser->toArray());
         $this->assertDatabaseMissing('comments',$threadToDeleteByLoginUser->comments->toArray());
@@ -77,7 +77,7 @@ class CreateThreadTest extends TestCase
       $threadToDeleteByLoginUser=Thread::factory()->create();
 
       
-       $this->delete($threadToDeleteByLoginUser->path())->assertRedirect('/login');
+       $this->delete('/threads/'.$threadToDeleteByLoginUser->id)->assertRedirect('/login');
 
     }
 
