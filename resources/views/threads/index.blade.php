@@ -6,10 +6,13 @@
         @foreach ($threads as $thread)
             <div class="col-md-8 card my-2">
                     <div class="card-header">
-                        <a href={{$thread->path()}}>
-                          {{$thread->title}}
+                        <a href={{$thread->path()}} >
+                          {{$thread->title}} 
                         </a>
-                      
+                        {{$thread->updated_at}}
+                        @if(auth()->check() && $thread->hasNewUpdates())
+                            <span class="bg-danger p-1 text-white ">New</span>  
+                        @endif
                     </div>
                     <div class="card-body">
                         {{$thread->desc}}

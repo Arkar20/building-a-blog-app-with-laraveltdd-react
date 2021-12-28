@@ -7,8 +7,10 @@ use App\Models\Channel;
 use App\Models\Comment;
 use App\Models\Activity;
 use App\Traits\ActivityTrait;
+use Illuminate\Support\Carbon;
 use App\Models\ThreadSubscription;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -106,5 +108,20 @@ class Thread extends Model
     public function unsubscribe()
     {
         return $this->subscriptions()->where('user_id',auth()->id())->delete();
+    }
+
+    public function hasNewUpdates()
+    {
+        $key=auth()->user()->getVisitedCacheKey($this->id);
+        $lastVisitedTime=Cache::get($key);
+
+        return $this->updated_at > $lastVisitedTime;
+    }
+    public function recordVisitedTime()
+    {
+
+        $key=auth()->user()->getVisitedCacheKey($threadid=$this->id);
+        
+        Cache::forever($key,Carbon::now());
     }
 }

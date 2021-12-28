@@ -50,8 +50,10 @@ class CommentController extends Controller
         //     $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){ //find and sending notifications
         //         return $users->each->notify(new CommentNotification);
         //     });
-
-        return back();
+        if(request()->wantsJson()){
+            return $thread;
+        }
+        // return back();
     }
 
     /**

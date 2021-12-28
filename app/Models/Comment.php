@@ -26,7 +26,7 @@ class Comment extends Model
         
          static::created(function($model){
         
-             $model->thread->increment('comments_count');
+                  $model->thread->increment('comments_count');
 
                     $subscripedusersId=$model->thread->subscriptions->pluck('user_id');
                     $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){
@@ -42,7 +42,7 @@ class Comment extends Model
             Log::info("Comment is deleted and reduce the comment count in thread");
             
                     $model->favourites->each->delete();
-             $model->thread && $model->thread->decrement('comments_count');
+                 $model->thread && $model->thread->decrement('comments_count');
         });
     }
 

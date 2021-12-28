@@ -109,4 +109,17 @@ class ThreadTest extends TestCase
 
       
     }
+    public function test_thread_can_record_its_visited_time_by_visiting_detail_page()
+    {
+        $user=User::factory()->create();
+        $this->actingAs($user);
+        
+        $thread=Thread::factory()->create();
+
+
+        $comment=Comment::factory()->create(['thread_id'=>$thread->id]);
+        $this->assertTrue($thread->hasNewUpdates());
+           
+    }
+   
 }

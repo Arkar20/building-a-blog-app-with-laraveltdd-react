@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
 use Illuminate\Http\Request;
-use App\Http\Requests\ThreadRequest;
+use Illuminate\Support\Carbon;
  use App\Filters\ThreadFilter;
+use App\Http\Requests\ThreadRequest;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\CommentResource;
 
 class ThreadController extends Controller
@@ -74,12 +76,12 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Channel $channel,$threadid)
+    public function show(Channel $channel,Thread $thread)
     {
-     
-        $thread=Thread::findOrFail($threadid);
 
-        $comments=$thread->comments()->paginate(20);
+            $thread->recordVisitedTime();
+            
+             $comments=$thread->comments()->paginate(20);
         
         if(request()->wantsJson()){
             $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
@@ -88,6 +90,7 @@ class ThreadController extends Controller
         }
 
         return view('threads.show',compact('thread','comments'));
+
     }
 
     /**
