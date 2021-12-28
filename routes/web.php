@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\NotificationThreadController;
 use App\Http\Controllers\ThreadSubscriptionController;
 
 /*
@@ -42,6 +44,7 @@ Route::get('/threads/{channel:name}/{thread:id}',[ThreadController::class, 'show
 
 Route::get('/profile/{user:name}',[ProfileController::class,'index'])->name('profile');
 
-
-
 Route::post('thread/{thread:id}/subscribe',[ThreadSubscriptionController::class,'store'])->name('thread.subscribe');
+
+
+Route::delete('/notifications/{notification}/markasread',[NotificationThreadController::class,'destroy'])->middleware('auth')->name('noti.mark');

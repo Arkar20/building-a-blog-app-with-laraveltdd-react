@@ -44,12 +44,12 @@ class CommentController extends Controller
     {
         $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
 
-        //*grap all the subscribed users to the thread
-           $subscripedusersId=$thread->subscriptions->pluck('user_id');// configuring the users id in subscriptions table
+        // //*grap all the subscribed users to the thread
+        //    $subscripedusersId=$thread->subscriptions->pluck('user_id');// configuring the users id in subscriptions table
 
-            $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){ //find and sending notifications
-                return $users->each->notify(new CommentNotification);
-            });
+        //     $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){ //find and sending notifications
+        //         return $users->each->notify(new CommentNotification);
+        //     });
 
         return back();
     }

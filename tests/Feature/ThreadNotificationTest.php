@@ -36,9 +36,29 @@ class ThreadNotificationTest extends TestCase
 
         //* both user 1 and user2 have the notifications
         $this->assertEquals(1,$user1->notifications->count());
-        $this->assertEquals(1,$user2->notifications->count());
 
 
        
+    }
+    public function test_user_can_mark_a_single_notification_as_read()
+    {
+         $this->withoutExceptionHandling();
+
+        $user=User::factory()->create();
+
+        $this->actingAs($user);
+
+        $thread=Thread::factory()->create();
+
+        $thread->subscribe();//!first user subscribing
+
+          //* add some reply to the subscribed thread
+       $comment=Comment::factory()->create(['thread_id'=>$thread->id]);
+            // /notifications/notification:id/markasread
+       //* hit url to mark as read
+       $this->delete('/notifications/'.auth()->user()->unreadNotifications()->first()->id.'/markasread');
+
+       // *see 0 count in notification of the user
+      $this->assertEquals(0,$user->notifications->count());
     }
 }

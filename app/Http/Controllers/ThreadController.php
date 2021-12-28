@@ -76,11 +76,11 @@ class ThreadController extends Controller
      */
     public function show(Channel $channel,$threadid)
     {
-
      
         $thread=Thread::findOrFail($threadid);
+
         $comments=$thread->comments()->paginate(20);
-        // dd($comments);
+        
         if(request()->wantsJson()){
             $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
 
