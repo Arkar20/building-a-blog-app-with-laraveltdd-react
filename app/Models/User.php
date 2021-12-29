@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Thread;
+use App\Models\Comment;
 use App\Models\Activity;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -53,6 +54,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     //*helpers
     public function getVisitedCacheKey($threadid)
@@ -60,5 +65,9 @@ class User extends Authenticatable
         
         return sprintf('user_%s_thread_%s',auth()->id(),$threadid);
         
+    }
+    public function lastComment()
+    {
+        return $this->fresh()->hasOne(Comment::class)->latest();
     }
 }

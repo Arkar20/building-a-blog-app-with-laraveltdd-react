@@ -5,6 +5,8 @@ namespace Tests\Unit;
 use ErrorException;
 use Tests\TestCase;
 use App\Http\Inspections\Spam;
+use App\Http\Inspections\KeyHeldDown;
+use App\Http\Inspections\InvalidKeyWords;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SpamTest extends TestCase
@@ -22,7 +24,7 @@ class SpamTest extends TestCase
 
         $this->expectException(ErrorException::class);
 
-          $spam=new Spam();
+          $spam=new InvalidKeyWords();
 
          $spam->detectInvalidKeyWords("Customer Service");
 
@@ -32,7 +34,7 @@ class SpamTest extends TestCase
 
         $this->expectException(ErrorException::class);
 
-          $spam=new Spam();
+          $spam=new KeyHeldDown();
 
          $spam->detectKeyHeldDown("aaaaaaa");
 

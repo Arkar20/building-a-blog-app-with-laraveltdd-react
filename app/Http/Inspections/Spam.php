@@ -17,8 +17,9 @@ class Spam   //* Facade pattern
 
      $keyheldown=new KeyHeldDown();
      $keyheldown->detectKeyHeldDown($title);
+   
    }catch(ErrorException $e){
-      return true;
+      return true; //!meaning there has spam
    }
   }
               

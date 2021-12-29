@@ -9,6 +9,7 @@ use App\Traits\ActivityTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use App\Notifications\CommentNotification;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
@@ -79,5 +80,9 @@ class Comment extends Model
     public function getisFavouritedAttribute()
     {
         return $this->favourites()->where('user_id',auth()->id())->exists();
+    }
+    public function  wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
     }
 }

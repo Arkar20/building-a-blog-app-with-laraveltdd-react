@@ -9,6 +9,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Inspections\Spam;
 use App\Providers\DeleteComment;
+use Illuminate\Support\Facades\Gate;
 use Whoops\Exception\ErrorException;
 use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
@@ -44,6 +45,14 @@ class CommentController extends Controller
      */
     public function store(Thread $thread,CommentRequest $request,Spam $span)
     {
+            
+        if(Gate::denies('create',new Comment)){
+                return response("Sorry You Are tryig too much :)",422);
+            }
+       
+
+        $this->authorize('create',new Comment);
+        
         $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
 
         if(request()->wantsJson()){

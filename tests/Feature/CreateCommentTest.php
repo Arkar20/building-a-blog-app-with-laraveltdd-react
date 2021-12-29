@@ -132,5 +132,29 @@ class CreateCommentTest extends TestCase
 
       $this->assertEquals(1,$thread->fresh()->comments_count);
     }
+     public function test_user_can_only_reply_once_per_minute()
+    {
+
+
+      $user=User::factory()->create();
+
+      $this->actingAs($user);
+      $thread=Thread::factory()->create();
+
+       $comment1=Comment::
+                factory()
+                ->make(['thread_id'=>$thread->id,'user_id'=>$user->id]);
+       $comment2=Comment::
+                factory()
+                ->make(['thread_id'=>$thread->id,'user_id'=>$user->id]);
+
+      $response1=$this->post('/comments/'.$thread->id,$comment1->toArray());
+
+   
+      $response2=$this->post('/comments/'.$thread->id,$comment2->toArray())->assertStatus(422);
+
+      $this->assertEquals(1,$thread->fresh()->comments_count);
+
+    }
    
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Thread;
 use App\Models\Comment;
@@ -25,5 +26,21 @@ class CommentTest extends TestCase
         $this->assertInstanceOf('App\Models\Thread',$comment->thread);
        
     }
+    public function test_comment_has_just_published()
+    {
+         $thread=Thread::factory()->create();
+        $comment=Comment::factory()->create(['thread_id'=>$thread->id]);
+
+        $this->assertTrue($comment->wasJustPublished());
+
+        $comment=Comment::factory()->create(['thread_id'=>$thread->id,'created_at'=>Carbon::now()->subHour()]);
+        $this->assertFalse($comment->wasJustPublished());
+
+
+        
+        
+    }
+
+    
 
 }
