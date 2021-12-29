@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
+use ErrorException;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 
 class CreateCommentTest extends TestCase
 {
@@ -131,4 +132,5 @@ class CreateCommentTest extends TestCase
 
       $this->assertEquals(1,$thread->fresh()->comments_count);
     }
+   
 }

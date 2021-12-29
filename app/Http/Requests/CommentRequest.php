@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\SpamDetection;
+use App\Http\Inspections\Spam;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CommentRequest extends FormRequest
@@ -24,7 +26,7 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required'
+            'title'=>['required',new SpamDetection()]
         ];
     }
 }

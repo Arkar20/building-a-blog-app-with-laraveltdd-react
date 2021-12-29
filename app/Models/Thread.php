@@ -112,6 +112,7 @@ class Thread extends Model
 
     public function hasNewUpdates()
     {
+        if (!auth()->check()) return false;
         $key=auth()->user()->getVisitedCacheKey($this->id);
         $lastVisitedTime=Cache::get($key);
 
@@ -119,6 +120,7 @@ class Thread extends Model
     }
     public function recordVisitedTime()
     {
+        if (!auth()->check()) return ;
 
         $key=auth()->user()->getVisitedCacheKey($threadid=$this->id);
         

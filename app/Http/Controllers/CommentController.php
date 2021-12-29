@@ -7,7 +7,9 @@ use App\Models\Thread;
 use App\Models\Channel;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Http\Inspections\Spam;
 use App\Providers\DeleteComment;
+use Whoops\Exception\ErrorException;
 use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Notifications\CommentNotification;
@@ -40,20 +42,14 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread,CommentRequest $request)
+    public function store(Thread $thread,CommentRequest $request,Spam $span)
     {
         $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
 
-        // //*grap all the subscribed users to the thread
-        //    $subscripedusersId=$thread->subscriptions->pluck('user_id');// configuring the users id in subscriptions table
-
-        //     $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){ //find and sending notifications
-        //         return $users->each->notify(new CommentNotification);
-        //     });
         if(request()->wantsJson()){
             return $thread;
         }
-        // return back();
+        return back();
     }
 
     /**
