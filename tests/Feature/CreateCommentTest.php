@@ -151,7 +151,7 @@ class CreateCommentTest extends TestCase
       $response1=$this->post('/comments/'.$thread->id,$comment1->toArray());
 
    
-      $response2=$this->post('/comments/'.$thread->id,$comment2->toArray())->assertStatus(422);
+      $response2=$this->post('/comments/'.$thread->id,$comment2->toArray())->assertStatus(429);
 
       $this->assertEquals(1,$thread->fresh()->comments_count);
 

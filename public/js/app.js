@@ -5810,68 +5810,66 @@ var RegisterComment = function RegisterComment() {
 
   var handleSubmit = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(e) {
-      var _yield$axios$post, data, error, _yield$axios$get, _data, _error;
+      var response, _yield$axios$get, data, errormsg;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
-              _context.next = 3;
+              _context.prev = 1;
+              _context.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_6___default().post("/comments/" + state.thread.id, {
                 title: title
               });
 
-            case 3:
-              _yield$axios$post = _context.sent;
-              data = _yield$axios$post.data;
-              error = _yield$axios$post.error;
+            case 4:
+              response = _context.sent;
 
-              if (!error) {
-                _context.next = 8;
-                break;
-              }
-
-              return _context.abrupt("return", console.log(error));
-
-            case 8:
-              if (!data) {
-                _context.next = 19;
+              if (!response.data) {
+                _context.next = 13;
                 break;
               }
 
               (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Register Successful!");
-              _context.next = 12;
+              _context.next = 9;
               return axios__WEBPACK_IMPORTED_MODULE_6___default().get(state.thread.path);
 
-            case 12:
+            case 9:
               _yield$axios$get = _context.sent;
-              _data = _yield$axios$get.data;
-              _error = _yield$axios$get.error;
-
-              if (!_error) {
-                _context.next = 17;
-                break;
-              }
-
-              return _context.abrupt("return", console.log(_error));
-
-            case 17:
-              if (_data) dispatch({
+              data = _yield$axios$get.data;
+              if (data) dispatch({
                 type: "SET_COMMENTS",
-                payload: _data
+                payload: data
               });
               setTitle('');
 
-            case 19:
+            case 13:
               ;
+              _context.next = 22;
+              break;
 
-            case 20:
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](1);
+              errormsg = JSON.parse(JSON.stringify(_context.t0.response.data));
+
+              if (!(_context.t0.response.status == 429)) {
+                _context.next = 21;
+                break;
+              }
+
+              return _context.abrupt("return", (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)(errormsg));
+
+            case 21:
+              (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)(errormsg.errors.title[0]);
+
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[1, 16]]);
     }));
 
     return function handleSubmit(_x) {

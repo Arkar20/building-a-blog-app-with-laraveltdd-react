@@ -18,23 +18,30 @@ const RegisterComment = () => {
         
         e.preventDefault();
         
-        const { data, error } = await axios.post("/comments/"+state.thread.id, { title });
+      try{  const response = await axios.post("/comments/"+state.thread.id, { title })
         
-        if (error) return console.log(error)
         
-        if (data) {
+      
+        if (response.data) {
             
-            toast("Register Successful!");
+             toast("Register Successful!");
             
-             const { data, error } = await axios.get(state.thread.path);
-
-             if (error) return console.log(error);
+            const { data } = await axios.get(state.thread.path);
 
             if (data) dispatch({ type: "SET_COMMENTS", payload: data });
             
             setTitle('')
             
-        };
+            };
+      } catch (err) {
+          const errormsg = JSON.parse(JSON.stringify(err.response.data));
+         
+          if(err.response.status==429) return toast(errormsg)
+
+             toast(errormsg.errors.title[0]);
+
+        }
+        
     }
     
     return (

@@ -47,7 +47,7 @@ class CommentController extends Controller
     {
             
         if(Gate::denies('create',new Comment)){
-                return response("Sorry You Are tryig too much :)",422);
+                return response("Sorry You Are tryig too much :)",429);
             }
        
 
