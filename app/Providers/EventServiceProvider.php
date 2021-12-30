@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        UserHasComment::class=>[
+            CreateComment::class,
+            NotifyMentionedUser::class
+        ]
     ];
 
     /**

@@ -19,9 +19,7 @@ const RegisterComment = () => {
         e.preventDefault();
         
       try{  const response = await axios.post("/comments/"+state.thread.id, { title })
-        
-        
-      
+
         if (response.data) {
             
              toast("Register Successful!");
