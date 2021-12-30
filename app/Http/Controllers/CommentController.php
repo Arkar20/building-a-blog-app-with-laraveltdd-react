@@ -15,6 +15,8 @@ use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Notifications\CommentNotification;
 use App\Notifications\UserHasMentioned;
+use App\Providers\CreateComment;
+use App\Providers\UserHasComment;
 
 class CommentController extends Controller
 {
@@ -44,7 +46,7 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread,CommentRequest $request,Spam $span)
+    public function store(Thread $thread,CommentRequest $request)
     {
             
         if(Gate::denies('create',new Comment)){
@@ -52,23 +54,12 @@ class CommentController extends Controller
             }
        
 
-        
-        $thread->comments()->create(['title'=>$request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
+        event(new UserHasComment($thread,$request));
 
         if(request()->wantsJson()){
             return $thread;
         }
 
-
-        //check the title with @ symbol to indentify the menstioned users 
-        preg_match_all('/@(\w+)/',$request->get('title'),$names);
-
-        $users=User::whereIn('name',$names)->get();
-
-        
-        $users->each->notify(new UserHasMentioned($thread));
-
-        //notify them
         return back();
     }
 

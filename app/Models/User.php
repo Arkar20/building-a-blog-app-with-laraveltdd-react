@@ -70,4 +70,10 @@ class User extends Authenticatable
     {
         return $this->fresh()->hasOne(Comment::class)->latest();
     }
+     public function identifyUsersToNotify($title)
+    {
+        preg_match_all('/@(\w+)/',$title,$names);
+
+        return User::whereIn('name',$names)->get();
+    }
 }

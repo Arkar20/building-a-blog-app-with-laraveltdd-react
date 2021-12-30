@@ -85,4 +85,5 @@ class Comment extends Model
     {
         return $this->created_at->gt(Carbon::now()->subMinute());
     }
+   
 }
