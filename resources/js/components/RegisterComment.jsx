@@ -6,9 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import {CommentContext} from './Comments'
 import { ReactDOM } from 'react-dom';
 import axios from "axios";
-import { fetchAllComment } from "./helpers/comments";
 
 const RegisterComment = () => {
+    
     const { state, dispatch } = useContext(CommentContext);
     
     const [title, setTitle] = useState("");

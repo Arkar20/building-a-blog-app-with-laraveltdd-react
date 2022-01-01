@@ -1,10 +1,10 @@
-import { React, useContext, useEffect } from "react"
+import { React, useEffect } from "react"
 
-import { CommentContext } from "./Comments"
+import { useCommentContext } from "../hooks/useCommentContext.js";
 
 const Paginator = () => {
     
-    const { state, dispatch } = useContext(CommentContext);
+    const { state, dispatch } = useCommentContext();
 
     const handlePaginate = async (url) => {
         const { data } = await axios.get(url)

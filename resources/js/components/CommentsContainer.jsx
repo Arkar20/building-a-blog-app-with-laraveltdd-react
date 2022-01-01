@@ -1,12 +1,12 @@
-import React,{useContext, useState} from "react";
+import React,{ useState } from "react";
 
-import {CommentContext} from './Comments'
 import CommentSingle from "./CommentSingle";
 import Paginator from "./Paginator";
+import {useCommentContext} from "../hooks/useCommentContext.js"
 
 const CommentsContainer = () => {
 
-    const { state, dispatch } = useContext(CommentContext);
+    const { state, dispatch } = useCommentContext();
 
     return (
         <>
