@@ -30,11 +30,12 @@ class NotifyMentionedUser
     public function handle(UserHasComment $event)
     {
         
-           auth()->user()
-                ->identifyUsersToNotify($event->request->title)
-                ->each->notify(new UserHasMentioned($event->thread));
-        
+         $usersToNotify=  auth()->user()
+                ->identifyUsersToNotify($event->request->title);
 
 
+        $usersToNotify &&  
+                $usersToNotify->each->notify(new UserHasMentioned($event->thread));
+    
     }
 }

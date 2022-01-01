@@ -5463,7 +5463,9 @@ var CommentSingle = function CommentSingle(_ref) {
           className: "card-body d-flex",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
             className: "flex-grow-1",
-            children: comment.title
+            dangerouslySetInnerHTML: {
+              __html: comment.title
+            }
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
             className: comment.is_favourited ? 'btn btn-primary' : 'btn btn-light',
             onClick: handleFavourite,

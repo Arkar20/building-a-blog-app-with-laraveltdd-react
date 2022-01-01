@@ -66,8 +66,8 @@ const CommentSingle = ({ comment }) => {
                         </button>}
                     </div>
                     <div className="card-body d-flex">
-                        <p className="flex-grow-1">
-                            {comment.title}
+                        <p className="flex-grow-1" dangerouslySetInnerHTML={{ __html: comment.title }}>
+                            {/* {! comment.title !} */}
                         </p>
                         <button className={comment.is_favourited?'btn btn-primary':'btn btn-light'} onClick={handleFavourite}>
                             {comment.favourites_count}  Favourite

@@ -73,7 +73,7 @@ class User extends Authenticatable
      public function identifyUsersToNotify($title)
     {
         preg_match_all('/@(\w+)/',$title,$names);
-
-        return User::whereIn('name',$names)->get();
+   
+        return $names[0] ? User::whereIn('name',$names)->get():null;
     }
 }

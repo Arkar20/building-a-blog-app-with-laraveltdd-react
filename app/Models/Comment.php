@@ -22,6 +22,9 @@ class Comment extends Model
 
     public $appends=['is_favourited'];
 
+    protected $fillable=['title','thread_id','user_id'];
+
+
      protected static function boot(){
         parent::boot();
         
@@ -30,6 +33,7 @@ class Comment extends Model
                   $model->thread->increment('comments_count');
 
                     $subscripedusersId=$model->thread->subscriptions->pluck('user_id');
+                   
                     $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){
                         return $users->each->notify(new CommentNotification);
                     });
@@ -47,8 +51,7 @@ class Comment extends Model
         });
     }
 
-    protected $fillable=['title','thread_id','user_id'];
-
+    //*relationships
     public function thread()
     {
         return $this->belongsTo(Thread::class);
@@ -65,6 +68,15 @@ class Comment extends Model
     {
         return $this->morphMany(Activity::class,'activity');
     }
+
+    //*mutators
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title']=preg_replace('/@([\w\-]+)/','<a href="/profile/$1">$0</a>',$value);
+    }
+
+
+    //*fun
     public function markFavourite()
     {
         

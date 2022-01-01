@@ -36,7 +36,12 @@ class MentionedUserTest extends TestCase
 
         $this->assertEquals($userToBeMentioned->id,auth()->user()->identifyUsersToNotify($comment->title)->first()->id);
         
-    
-    
+    }
+    public function test_tranform_mentioned_user_into_anchor_tag()
+    {
+        $comment=Comment::factory()->make(['title'=>"Hello @John-Doe"]);
+
+        $this->assertEquals('Hello <a href="/profile/John-Doe">@John-Doe</a>',$comment->title);
+
     }
 }
