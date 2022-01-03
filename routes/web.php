@@ -6,6 +6,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\NotificationThreadController;
 use App\Http\Controllers\ThreadSubscriptionController;
 
@@ -48,3 +49,6 @@ Route::post('thread/{thread:id}/subscribe',[ThreadSubscriptionController::class,
 
 
 Route::delete('/notifications/{notification}/markasread',[NotificationThreadController::class,'destroy'])->middleware('auth')->name('noti.mark');
+
+Route::post('/profile/{user:name}/avatar',[AvatarUploadController::class,'store'])->name('avatar.upload')->middleware('auth');
+

@@ -3,31 +3,8 @@
 @section('content')
 <div class="container row">
     
-        @foreach ($threads as $thread)
-            <div class="col-md-8 card my-2">
-                    <div class="card-header">
-                        <a href={{$thread->path()}} >
-                          {{$thread->title}} 
-                        </a>
-                        {{$thread->updated_at}}
-                        @if(auth()->check() && $thread->hasNewUpdates())
-                            <span class="bg-danger p-1 text-white ">New</span>  
-                        @endif
-                    </div>
-                    <div class="card-body">
-                        {{$thread->desc}}
-                    </div>
-                    <div class="card-footer">
-                        <p>
-                            {{$thread->created_at->diffForHumans()}}
-                        </p>
-                        <p>
-                            {{$thread->comments_count}} comments
-                        </p>
-                    </div>
-            </div>
-            
-        @endforeach
+       @include('threads._list',['threads'=>$threads])
+       
         {{$threads->withQueryString()->links()}}
 </div>
     
