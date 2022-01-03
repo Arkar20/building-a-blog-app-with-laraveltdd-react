@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Http\Requests\ThreadRequest;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\CommentResource;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadController extends Controller
 {
@@ -25,7 +26,7 @@ class ThreadController extends Controller
      */
     public function index(Channel $channel=null,ThreadFilter $filters)
     {
-        if($channel){
+       if($channel){
         
             $threads=$channel->threads();
 
@@ -42,10 +43,13 @@ class ThreadController extends Controller
         }
 
         // return $threads->get();
-        $threads=$threads->with('channel')->latest()->paginate();
+        $threads=$threads->with('channel')->latest()->paginate(10);
 
-       return view('threads.index',compact('threads'));
+        $trending_threads=array_map('json_decode',array_flip(Redis::zrevrange('trending_threads',0,4,'withscores')));
+       
+       return view('threads.index',compact('threads','trending_threads'));
     }
+   
 
     /**
      * Show the form for creating a new resource.
@@ -79,17 +83,21 @@ class ThreadController extends Controller
     public function show(Channel $channel,Thread $thread)
     {
 
-            $thread->recordVisitedTime();
+       
+        if(!request()->wantsJson()){
             
-             $comments=$thread->comments()->paginate(20);
-        
-        if(request()->wantsJson()){
-            $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
+             $thread->recordVisitedTime();
+            
+            $comments=$thread->comments()->paginate(20);
+
+            $threadIsVisited=Redis::zincrby('trending_threads',1,json_encode(['title'=>$thread->title,'path'=>$thread->path()]));
+            
+            return view('threads.show',compact('thread','comments'));
+        }
+             $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
 
             return $comments;
-        }
 
-        return view('threads.show',compact('thread','comments'));
 
     }
 

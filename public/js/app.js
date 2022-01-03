@@ -5317,10 +5317,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
-/* harmony import */ var _UploadBtn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UploadBtn */ "./resources/js/components/UploadBtn.jsx");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+/* harmony import */ var _UploadBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UploadBtn */ "./resources/js/components/UploadBtn.jsx");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5344,14 +5344,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Avatar = function Avatar(_ref) {
   var auth = _ref.auth;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(auth.avatarPath),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(auth.avatarPath),
       _useState2 = _slicedToArray(_useState, 2),
       avatarimg = _useState2[0],
       setAvatarimg = _useState2[1];
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
     className: "container",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_toastify__WEBPACK_IMPORTED_MODULE_2__.ToastContainer, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_toastify__WEBPACK_IMPORTED_MODULE_1__.ToastContainer, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: " d-flex align-items-md-center",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
         src: avatarimg,
@@ -5360,9 +5360,9 @@ var Avatar = function Avatar(_ref) {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
         children: auth.name
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_UploadBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_UploadBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
       setAvatarimg: setAvatarimg,
-      authname: auth.name
+      url: "/profile/".concat(auth.name, "/avatar")
     })]
   });
 };
@@ -5372,7 +5372,7 @@ var avatarid = document.getElementById("avatar");
 
 if (avatarid) {
   var authuser = JSON.parse(avatarid.getAttribute("authuser"));
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Avatar, {
+  react_dom__WEBPACK_IMPORTED_MODULE_0__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Avatar, {
     auth: authuser
   }), document.getElementById("avatar"));
 }
@@ -5749,7 +5749,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 
-var showAndUploadFile = function showAndUploadFile(e, callback, name) {
+var showAndUploadFile = function showAndUploadFile(e, callback, uploadEndPoint) {
   var file = new FileReader();
   file.readAsDataURL(e.target.files[0]);
 
@@ -5759,7 +5759,7 @@ var showAndUploadFile = function showAndUploadFile(e, callback, name) {
 
   var formdata = new FormData();
   formdata.append("avatar", e.target.files[0]);
-  axios.post("/profile/" + name + "/avatar", formdata).then(function (res) {
+  axios.post(uploadEndPoint, formdata).then(function (res) {
     return (0,react_toastify__WEBPACK_IMPORTED_MODULE_0__.toast)("Success");
   })["catch"](function (err) {
     return console.error(err);
@@ -6029,7 +6029,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var UploadBtn = function UploadBtn(_ref) {
   var setAvatarimg = _ref.setAvatarimg,
-      authname = _ref.authname;
+      url = _ref.url;
   var uploadbtn = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
@@ -6037,7 +6037,7 @@ var UploadBtn = function UploadBtn(_ref) {
       type: "file",
       name: "avatar",
       onChange: function onChange(e) {
-        return (0,_HOF__WEBPACK_IMPORTED_MODULE_0__.showAndUploadFile)(e, setAvatarimg, authname);
+        return (0,_HOF__WEBPACK_IMPORTED_MODULE_0__.showAndUploadFile)(e, setAvatarimg, url);
       } //! a higher order fun
       ,
       className: " d-none"

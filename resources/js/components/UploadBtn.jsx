@@ -1,7 +1,7 @@
 import { showAndUploadFile } from "./HOF";
 import { useRef } from "react";
 
-const UploadBtn = ({ setAvatarimg, authname }) => {
+const UploadBtn = ({ setAvatarimg, url }) => {
     const uploadbtn = useRef();
 
     return (
@@ -10,7 +10,7 @@ const UploadBtn = ({ setAvatarimg, authname }) => {
                 ref={uploadbtn}
                 type="file"
                 name="avatar"
-                onChange={(e) => showAndUploadFile(e, setAvatarimg, authname)} //! a higher order fun
+                onChange={(e) => showAndUploadFile(e, setAvatarimg, url)} //! a higher order fun
                 className=" d-none"
             />
 

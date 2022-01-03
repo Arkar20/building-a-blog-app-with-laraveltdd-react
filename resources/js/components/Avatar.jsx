@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
-
 import ReactDOM from "react-dom";
 import { ToastContainer } from "react-toastify";
 import UploadBtn from "./UploadBtn";
+import { useState } from "react";
 
 const Avatar = ({ auth }) => {
 
@@ -18,7 +17,10 @@ const Avatar = ({ auth }) => {
                 <img src={avatarimg} width="100" height="100" />
                 <h1>{auth.name}</h1>
             </div>
-            <UploadBtn setAvatarimg={setAvatarimg} authname={auth.name} />
+            <UploadBtn
+                setAvatarimg={setAvatarimg}
+                url={`/profile/${auth.name}/avatar`}
+            />
         </form>
     );
 };

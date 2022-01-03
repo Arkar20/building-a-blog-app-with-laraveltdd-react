@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-export const showAndUploadFile = (e, callback, name) => {
+export const showAndUploadFile = (e, callback, uploadEndPoint) => {
     const file = new FileReader();
     file.readAsDataURL(e.target.files[0]);
 
@@ -12,7 +12,7 @@ export const showAndUploadFile = (e, callback, name) => {
     formdata.append("avatar", e.target.files[0]);
 
     axios
-        .post("/profile/" + name + "/avatar", formdata)
+        .post(uploadEndPoint, formdata)
         .then((res) => toast("Success"))
         .catch((err) => console.error(err));
 };

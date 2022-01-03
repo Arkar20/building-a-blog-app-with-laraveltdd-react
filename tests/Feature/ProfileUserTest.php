@@ -13,12 +13,12 @@ class ProfileUserTest extends TestCase
 
     use RefreshDatabase;
     
-    public function test_profile_page_show_user_information()
-    {
-        $user=User::factory()->create();
+    // public function test_profile_page_show_user_information()
+    // {
+    //     $user=User::factory()->create();
 
-        $this->get('/profile/'.$user->name)->assertSee($user->name);
-    }
+    //     $this->get('/profile/'.$user->name)->assertSee($user->name);
+    // }
     public function test_profile_page_show_user_activities()
     {
         $user=User::factory()->create();

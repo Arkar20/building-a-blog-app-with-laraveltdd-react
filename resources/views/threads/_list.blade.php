@@ -1,5 +1,4 @@
- @foreach ($threads as $thread)
-            <div class="col-md-8 card my-2">
+                @foreach ($threads as $thread)
                     <div class="card-header d-flex justify-content-between">
                         <a href={{$thread->path()}} >
                           {{$thread->title}} 
@@ -20,6 +19,5 @@
                             {{$thread->comments_count}} comments
                         </p>
                     </div>
-            </div>
+                    @endforeach
             
-        @endforeach

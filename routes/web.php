@@ -9,6 +9,7 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\NotificationThreadController;
 use App\Http\Controllers\ThreadSubscriptionController;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,7 @@ Route::delete('/notifications/{notification}/markasread',[NotificationThreadCont
 
 Route::post('/profile/{user:name}/avatar',[AvatarUploadController::class,'store'])->name('avatar.upload')->middleware('auth');
 
+
+// Route::get('/test',function(){
+//     Redis::zincrby('trending_threads',1,"something1");
+// });
