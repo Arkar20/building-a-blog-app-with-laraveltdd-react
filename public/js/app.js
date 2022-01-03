@@ -5262,6 +5262,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
+__webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
+
 __webpack_require__(/*! ./components/Comments */ "./resources/js/components/Comments.jsx");
 
 __webpack_require__(/*! ./components/Avatar */ "./resources/js/components/Avatar.jsx");
@@ -5315,10 +5317,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+/* harmony import */ var _UploadBtn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UploadBtn */ "./resources/js/components/UploadBtn.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5337,57 +5340,29 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Avatar = function Avatar(_ref) {
   var auth = _ref.auth;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(auth.avatarPath),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(auth.avatarPath),
       _useState2 = _slicedToArray(_useState, 2),
       avatarimg = _useState2[0],
       setAvatarimg = _useState2[1];
 
-  var uploadbtn = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
-
-  var handleSubmitAvatar = function handleSubmitAvatar(e) {
-    var file = new FileReader();
-    file.readAsDataURL(e.target.files[0]);
-
-    file.onload = function (e) {
-      setAvatarimg(e.target.result);
-    };
-
-    var formdata = new FormData();
-    formdata.append('avatar', e.target.files[0]);
-    axios.post("/profile/" + auth.name + "/avatar", formdata).then(function (res) {
-      return (0,react_toastify__WEBPACK_IMPORTED_MODULE_0__.toast)("Success");
-    })["catch"](function (err) {
-      return console.error(err);
-    });
-  };
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
     className: "container",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_toastify__WEBPACK_IMPORTED_MODULE_2__.ToastContainer, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: " d-flex align-items-md-center",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
         src: avatarimg,
         width: "100",
         height: "100"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
         children: auth.name
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-      ref: uploadbtn,
-      type: "file",
-      name: "avatar",
-      onChange: handleSubmitAvatar,
-      className: " d-none"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-      type: "button",
-      className: "btn btn-success",
-      onClick: function onClick() {
-        return uploadbtn.current.click();
-      },
-      children: "Upload Profile"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_UploadBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      setAvatarimg: setAvatarimg,
+      authname: auth.name
     })]
   });
 };
@@ -5397,7 +5372,7 @@ var avatarid = document.getElementById("avatar");
 
 if (avatarid) {
   var authuser = JSON.parse(avatarid.getAttribute("authuser"));
-  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Avatar, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Avatar, {
     auth: authuser
   }), document.getElementById("avatar"));
 }
@@ -5761,6 +5736,38 @@ var CommentsContainer = function CommentsContainer() {
 
 /***/ }),
 
+/***/ "./resources/js/components/HOF.js":
+/*!****************************************!*\
+  !*** ./resources/js/components/HOF.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "showAndUploadFile": () => (/* binding */ showAndUploadFile)
+/* harmony export */ });
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+
+var showAndUploadFile = function showAndUploadFile(e, callback, name) {
+  var file = new FileReader();
+  file.readAsDataURL(e.target.files[0]);
+
+  file.onload = function (e) {
+    callback(e.target.result);
+  };
+
+  var formdata = new FormData();
+  formdata.append("avatar", e.target.files[0]);
+  axios.post("/profile/" + name + "/avatar", formdata).then(function (res) {
+    return (0,react_toastify__WEBPACK_IMPORTED_MODULE_0__.toast)("Success");
+  })["catch"](function (err) {
+    return console.error(err);
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/components/Paginator.jsx":
 /*!***********************************************!*\
   !*** ./resources/js/components/Paginator.jsx ***!
@@ -5862,14 +5869,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
-/* harmony import */ var _Comments__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Comments */ "./resources/js/components/Comments.jsx");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+/* harmony import */ var _Comments__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Comments */ "./resources/js/components/Comments.jsx");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5897,13 +5903,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var RegisterComment = function RegisterComment() {
-  var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_Comments__WEBPACK_IMPORTED_MODULE_4__.CommentContext),
+  var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_Comments__WEBPACK_IMPORTED_MODULE_3__.CommentContext),
       state = _useContext.state,
       dispatch = _useContext.dispatch;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(""),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       title = _useState2[0],
       setTitle = _useState2[1];
@@ -5919,7 +5924,7 @@ var RegisterComment = function RegisterComment() {
               e.preventDefault();
               _context.prev = 1;
               _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_6___default().post("/comments/" + state.thread.id, {
+              return axios__WEBPACK_IMPORTED_MODULE_5___default().post("/comments/" + state.thread.id, {
                 title: title
               });
 
@@ -5931,9 +5936,9 @@ var RegisterComment = function RegisterComment() {
                 break;
               }
 
-              (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)("Register Successful!");
+              (0,react_toastify__WEBPACK_IMPORTED_MODULE_2__.toast)("Register Successful!");
               _context.next = 9;
-              return axios__WEBPACK_IMPORTED_MODULE_6___default().get(state.thread.path);
+              return axios__WEBPACK_IMPORTED_MODULE_5___default().get(state.thread.path);
 
             case 9:
               _yield$axios$get = _context.sent;
@@ -5959,10 +5964,10 @@ var RegisterComment = function RegisterComment() {
                 break;
               }
 
-              return _context.abrupt("return", (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)(errormsg));
+              return _context.abrupt("return", (0,react_toastify__WEBPACK_IMPORTED_MODULE_2__.toast)(errormsg));
 
             case 21:
-              (0,react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast)(errormsg.errors.title[0]);
+              (0,react_toastify__WEBPACK_IMPORTED_MODULE_2__.toast)(errormsg.errors.title[0]);
 
             case 22:
             case "end":
@@ -5977,12 +5982,12 @@ var RegisterComment = function RegisterComment() {
     };
   }();
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_toastify__WEBPACK_IMPORTED_MODULE_3__.ToastContainer, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_toastify__WEBPACK_IMPORTED_MODULE_2__.ToastContainer, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
       children: "Comment Section"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: handleSubmit,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
         type: "text",
         className: "form-control",
         name: "title",
@@ -5990,7 +5995,7 @@ var RegisterComment = function RegisterComment() {
         onChange: function onChange(e) {
           return setTitle(e.target.value);
         }
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
         className: "btn btn-primary my-2",
         children: "Comment"
       })]
@@ -5999,6 +6004,55 @@ var RegisterComment = function RegisterComment() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RegisterComment);
+
+/***/ }),
+
+/***/ "./resources/js/components/UploadBtn.jsx":
+/*!***********************************************!*\
+  !*** ./resources/js/components/UploadBtn.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _HOF__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HOF */ "./resources/js/components/HOF.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+var UploadBtn = function UploadBtn(_ref) {
+  var setAvatarimg = _ref.setAvatarimg,
+      authname = _ref.authname;
+  var uploadbtn = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+      ref: uploadbtn,
+      type: "file",
+      name: "avatar",
+      onChange: function onChange(e) {
+        return (0,_HOF__WEBPACK_IMPORTED_MODULE_0__.showAndUploadFile)(e, setAvatarimg, authname);
+      } //! a higher order fun
+      ,
+      className: " d-none"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      type: "button",
+      className: "btn btn-success",
+      onClick: function onClick() {
+        return uploadbtn.current.click();
+      },
+      children: "Upload Profile"
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UploadBtn);
 
 /***/ }),
 
