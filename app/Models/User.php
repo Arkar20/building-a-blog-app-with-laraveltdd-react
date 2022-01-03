@@ -46,6 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends=['avatarPath'];
+
     public function threads()
     {
         return $this->hasMany(Thread::class);
@@ -76,5 +78,9 @@ class User extends Authenticatable
         preg_match_all('/@(\w+)/',$title,$names);
    
         return $names[0] ? User::whereIn('name',$names)->get():null;
+    }
+    public function getAvatarPathAttribute($value)
+    {
+        return asset($this->avatar ?? 'avatars/default.jpg');
     }
 }

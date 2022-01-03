@@ -37,6 +37,22 @@ class AvatarTest extends TestCase
             ->assertStatus(422);
 
     }
+    public function test_diplay_default_img_if_the_avatar_is_null()
+    {
+         $user=User::factory()->create();
+        $this->actingAs($user);
+
+
+
+        $this->assertEquals('avatars/default.jpg',$user->getAvatar());
+        //hit some endpoint and 
+        $this->json('POST','/profile/'.$user->name.'/avatar',['avatar'=> $file=UploadedFile::fake()->image('avatar.jpg')]);
+
+
+        $this->assertEquals('avatars/'.$file->hashName(),$user->getAvatar());
+
+        
+    }
     public function test_only_auth_members_can_upload_invalid_format()
     {
         $this->withoutExceptionHandling();

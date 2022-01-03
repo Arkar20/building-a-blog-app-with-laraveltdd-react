@@ -8,10 +8,10 @@ class AvatarUploadController extends Controller
 {
   public function store(Request $request)
   {
-     $request->validate(['avatar'=>['image','file']]);
+     $request->validate(['avatar'=>"required|image"]);
 
      auth()->user()->update(['avatar'=>$request->file('avatar')->store('avatars','public')]);
 
-     return back();
+     return response()->json(["msg"=>"Successful"]);
   }
 }

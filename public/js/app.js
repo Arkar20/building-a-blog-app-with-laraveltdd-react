@@ -5264,6 +5264,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./components/Comments */ "./resources/js/components/Comments.jsx");
 
+__webpack_require__(/*! ./components/Avatar */ "./resources/js/components/Avatar.jsx");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -5299,6 +5301,106 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Avatar.jsx":
+/*!********************************************!*\
+  !*** ./resources/js/components/Avatar.jsx ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var Avatar = function Avatar(_ref) {
+  var auth = _ref.auth;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(auth.avatarPath),
+      _useState2 = _slicedToArray(_useState, 2),
+      avatarimg = _useState2[0],
+      setAvatarimg = _useState2[1];
+
+  var uploadbtn = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+
+  var handleSubmitAvatar = function handleSubmitAvatar(e) {
+    var file = new FileReader();
+    file.readAsDataURL(e.target.files[0]);
+
+    file.onload = function (e) {
+      setAvatarimg(e.target.result);
+    };
+
+    var formdata = new FormData();
+    formdata.append('avatar', e.target.files[0]);
+    axios.post("/profile/" + auth.name + "/avatar", formdata).then(function (res) {
+      return (0,react_toastify__WEBPACK_IMPORTED_MODULE_0__.toast)("Success");
+    })["catch"](function (err) {
+      return console.error(err);
+    });
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+    className: "container",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: " d-flex align-items-md-center",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+        src: avatarimg,
+        width: "100",
+        height: "100"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
+        children: auth.name
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+      ref: uploadbtn,
+      type: "file",
+      name: "avatar",
+      onChange: handleSubmitAvatar,
+      className: " d-none"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+      type: "button",
+      className: "btn btn-success",
+      onClick: function onClick() {
+        return uploadbtn.current.click();
+      },
+      children: "Upload Profile"
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Avatar);
+var avatarid = document.getElementById("avatar");
+
+if (avatarid) {
+  var authuser = JSON.parse(avatarid.getAttribute("authuser"));
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Avatar, {
+    auth: authuser
+  }), document.getElementById("avatar"));
+}
 
 /***/ }),
 
