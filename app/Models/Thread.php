@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Visit\Visit;
 use App\Models\Channel;
 use App\Models\Comment;
 use App\Models\Activity;
@@ -127,6 +128,13 @@ class Thread extends Model
         $key=auth()->user()->getVisitedCacheKey($threadid=$this->id);
         
         Cache::forever($key,Carbon::now());
+    }
+
+    // !record visit 
+
+    public function visit()
+    {
+        return new Visit($this);
     }
    
 }

@@ -122,5 +122,20 @@ class ThreadTest extends TestCase
         $this->assertTrue($thread->hasNewUpdates());
            
     }
+     public function test_thread_record_visit_on_each_visist()
+    {
+        $thread=Thread::factory()->create();
+        $thread->visit()->reset();
+        //record the vists of the thread
+        $thread->visit()->record();
+        //set thread visits and increment by one
+        $this->assertEquals(1,$thread->visit()->count());
+        $thread->visit()->record();
+
+        
+        //set thread visits and increment by one
+        $this->assertEquals(2,$thread->visit()->count());
+
+    }
    
 }
