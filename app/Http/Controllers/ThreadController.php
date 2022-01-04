@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Http\Requests\ThreadRequest;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\CommentResource;
+use App\Trending\Trending;
 use Illuminate\Support\Facades\Redis;
 
 class ThreadController extends Controller
@@ -24,31 +25,15 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel=null,ThreadFilter $filters)
+    public function index(Channel $channel=null,ThreadFilter $filters,Trending $trending)
     {
-       if($channel){
-        
-            $threads=$channel->threads();
+         $threads= $this->getThreads($channel,$filters);
 
-        }else{
-            $threads=Thread::query();
-        }
-
-
-        $threads=$threads->filter($filters);
-   
-
-        if(request()->wantsJson()){
-            return response()->json($threads->get());
-        }
-
-        // return $threads->get();
-        $threads=$threads->with('channel')->latest()->paginate(10);
-
-        $trending_threads=array_map('json_decode',array_flip(Redis::zrevrange('trending_threads',0,4,'withscores')));
+          $trending_threads=$trending->getTrending();
        
        return view('threads.index',compact('threads','trending_threads'));
     }
+    
    
 
     /**
@@ -80,17 +65,16 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Channel $channel,Thread $thread)
+    public function show(Channel $channel,Thread $thread,Trending $trending)
     {
 
-       
         if(!request()->wantsJson()){
-            
+
              $thread->recordVisitedTime();
             
             $comments=$thread->comments()->paginate(20);
 
-            $threadIsVisited=Redis::zincrby('trending_threads',1,json_encode(['title'=>$thread->title,'path'=>$thread->path()]));
+            $trending->setTrending($thread);
             
             return view('threads.show',compact('thread','comments'));
         }
@@ -139,5 +123,28 @@ class ThreadController extends Controller
           $thread->delete();
 
         return redirect('/threads');
+    }
+    public function getThreads($channel,ThreadFilter $filters)
+    {
+         if($channel){
+        
+            $threads=$channel->threads();
+
+        }else{
+            $threads=Thread::query();
+        }
+
+
+        $threads=$threads->filter($filters);
+   
+
+        if(request()->wantsJson()){
+            return response()->json($threads->get());
+        }
+
+        // return $threads->get();
+        $threads=$threads->with('channel')->latest()->paginate(10);
+
+        return $threads;
     }
 }
