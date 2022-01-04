@@ -18,7 +18,7 @@ class ThreadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('store','destroy');
+        $this->middleware(['auth','verified'])->only('store','destroy');
     }
     /**
      * Display a listing of the resource.
@@ -78,7 +78,7 @@ class ThreadController extends Controller
 
              $thread->recordVisitedTime();
             
-             $thread->recordVisit();
+             $thread->visit()->record();
 
              $trending->setTrending($thread);
 

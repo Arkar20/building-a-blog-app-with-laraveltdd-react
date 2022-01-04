@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
@@ -9,7 +11,6 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\NotificationThreadController;
 use App\Http\Controllers\ThreadSubscriptionController;
-use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -55,5 +56,5 @@ Route::post('/profile/{user:name}/avatar',[AvatarUploadController::class,'store'
 
 
 // Route::get('/test',function(){
-//     Redis::zincrby('trending_threads',1,"something1");
-// });
+//     return "testing verified middleware";
+// })->middleware('verified');

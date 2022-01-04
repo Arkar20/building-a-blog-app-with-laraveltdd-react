@@ -46,10 +46,23 @@ class UserTest extends TestCase
 
          $comment2= Comment::factory()->create(['user_id'=>$user->id,'thread_id'=>$thread->id]);
 
-        //  dd($user->lastComment->toArray());
-        // dd($comment2);
-        //  dd($user->fresh()->lastReply()->toArray());
+     
          $this->assertEquals($user->lastComment->id,$comment2->id);
+
+        
+    }
+    public function test_user_have_to_verify_email_before_creating_thread()
+    {
+            $user=User::factory()->create(['email_verified_at'=>null]);
+
+            $this->actingAs($user);
+
+             $thread=Thread::factory()->make();
+
+
+
+            $response=$this->post('/threads',$thread->toArray())->assertRedirect('/email/verify');  
+
 
         
     }
