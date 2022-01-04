@@ -3,7 +3,7 @@
 @section('content')
 <div class="container row">
     
-        <div class="col-md-8 card my-2">
+        <div class="col-md-8 my-2">
        @include('threads._list',['threads'=>$threads])
 
         </div>

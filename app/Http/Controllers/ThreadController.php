@@ -28,9 +28,15 @@ class ThreadController extends Controller
     public function index(Channel $channel=null,ThreadFilter $filters,Trending $trending)
     {
          $threads= $this->getThreads($channel,$filters);
+         
+         if(request()->wantsJson()){
+            return response()->json($threads);
+        }
 
-          $trending_threads=$trending->getTrending();
+        $trending_threads=$trending->getTrending();
        
+      
+
        return view('threads.index',compact('threads','trending_threads'));
     }
     
@@ -72,13 +78,16 @@ class ThreadController extends Controller
 
              $thread->recordVisitedTime();
             
+             $thread->recordVisit();
+
+             $trending->setTrending($thread);
+
             $comments=$thread->comments()->paginate(20);
 
-            $trending->setTrending($thread);
-            
             return view('threads.show',compact('thread','comments'));
         }
-             $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
+             
+            $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
 
             return $comments;
 
@@ -138,13 +147,12 @@ class ThreadController extends Controller
         $threads=$threads->filter($filters);
    
 
-        if(request()->wantsJson()){
-            return response()->json($threads->get());
-        }
+     
 
         // return $threads->get();
         $threads=$threads->with('channel')->latest()->paginate(10);
 
+        
         return $threads;
     }
 }

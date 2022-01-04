@@ -89,7 +89,8 @@ class ThreadTest extends TestCase
 
 
        $response=$this->getJson('/threads?popular=1')->json();
-       $this->assertEquals([4,3,2],array_column($response,'comments_count'));
+    //    dd(array_column($response,'comments_count'));
+       $this->assertEquals([4,3,2],array_column($response['data'],'comments_count'));
 
 
     }

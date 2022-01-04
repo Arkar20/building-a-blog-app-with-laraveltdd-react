@@ -8,15 +8,17 @@ use App\Models\Comment;
 use App\Models\Activity;
 use App\Traits\ActivityTrait;
 use Illuminate\Support\Carbon;
+use App\Traits\RecordVisitTrait;
 use App\Models\ThreadSubscription;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Thread extends Model
 {
-    use HasFactory,ActivityTrait;
+    use HasFactory,ActivityTrait,RecordVisitTrait;
 
     protected $guarded=[""];
  
@@ -126,4 +128,5 @@ class Thread extends Model
         
         Cache::forever($key,Carbon::now());
     }
+   
 }

@@ -34,7 +34,7 @@ class ThreadTest extends TestCase
         $this->assertInstanceOf(Comment::class,$thread->comments[0]);
 
     }
-    
+   
 
    
 }
