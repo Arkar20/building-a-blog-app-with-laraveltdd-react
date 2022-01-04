@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Trending\Trending;
+use Illuminate\Support\Str;
+ use App\Filters\ThreadFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
- use App\Filters\ThreadFilter;
 use App\Http\Requests\ThreadRequest;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Resources\CommentResource;
-use App\Trending\Trending;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Resources\CommentResource;
 
 class ThreadController extends Controller
 {
@@ -60,7 +61,14 @@ class ThreadController extends Controller
      */
     public function store( ThreadRequest $request)
     {
-        $thread=Thread::create(['title'=>$request->get('title'),'desc'=>$request->get('desc'),'user_id'=>auth()->id(),'channel_id'=>$request->channel_id]);
+        
+        $thread=Thread::create([
+                'title'=>$request->get('title'),
+                'desc'=>$request->get('desc'),
+                'user_id'=>auth()->id(),
+                'channel_id'=>$request->channel_id,
+                'slug'=>Str::slug($request->title)
+            ]);
        
         return redirect('/threads')->with('success','Thread Has Created');
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Channel;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
@@ -38,6 +39,8 @@ class CreateThreadTest extends TestCase
 
         $thread= Thread::factory()->make(['user_id'=>$user->id]);
 
+        
+
         $response=$this->post('/threads',$thread->toArray());
 
         $this->get('/threads')->assertSee($thread->title);
@@ -70,6 +73,26 @@ class CreateThreadTest extends TestCase
         $this->get('/threads')->assertSee($threadNotByLoginUser->title);
 
     }
+    public function test_thread_require_unique_slug()
+    {
+
+      $user=User::factory()->create();
+      $this->actingAs($user);
+     $this->withoutExceptionHandling();
+      $thread=Thread::factory()->create(['title'=>"foo bar",'slug'=>"foo-bar"]);
+
+      $this->assertTrue(Thread::where('slug',$thread->slug)->exists());
+      
+      $res=$this->post('/threads',$thread->toArray());
+
+    $threads=Thread::all()->toArray()[1];
+
+      $this->assertEquals('foo-bar-2',$threads['slug']);
+
+      
+    }
+
+
     public function test_guest_cannnot_delete_thread()
     {
 

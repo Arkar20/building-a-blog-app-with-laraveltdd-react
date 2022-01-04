@@ -7,6 +7,7 @@ use App\Visit\Visit;
 use App\Models\Channel;
 use App\Models\Comment;
 use App\Models\Activity;
+use Illuminate\Support\Str;
 use App\Traits\ActivityTrait;
 use Illuminate\Support\Carbon;
 use App\Models\ThreadSubscription;
@@ -19,7 +20,7 @@ class Thread extends Model
 {
     use HasFactory,ActivityTrait;
 
-    protected $guarded=[""];
+    protected $guarded=[];
  
     public $with=['channel'];
 
@@ -30,7 +31,7 @@ class Thread extends Model
     //!helpers
     public function path()
     {
-        return '/threads/'. $this->channel->name.'/'.$this->id;
+        return '/threads/'. $this->channel->name.'/'.$this->slug;
     }
 
     public function getCommentsCountAttribute()
@@ -40,6 +41,29 @@ class Thread extends Model
     public function getPathAttribute()
     {
         return $this->path();   
+    }
+     public function setSlugAttribute($slug)
+    {
+
+        if(static::whereSlug($slug=Str::slug($slug))->exists())
+        {
+           $slug=$this->incrementSlug($slug);
+        }
+
+        $this->attributes['slug']= $slug;
+
+
+    }
+    public function incrementSlug($slug)
+    {
+         $original=$slug;
+        $counter=2;
+
+        while(static::where('slug',$slug)->exists()){
+            return $original.'-'.$counter++;
+        }
+        // dd($slug);
+        return $slug;
     }
 
 
@@ -87,7 +111,7 @@ class Thread extends Model
         return $this->hasMany(ThreadSubscription::class);
     }
 
-
+   
 
     //! scope
     public function scopeFilter($query,$filters)

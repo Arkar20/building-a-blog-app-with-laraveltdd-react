@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Comment;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ThreadTest extends TestCase
@@ -34,7 +35,16 @@ class ThreadTest extends TestCase
         $this->assertInstanceOf(Comment::class,$thread->comments[0]);
 
     }
-   
+    public function test_thread_has_slug()
+    {
+        $this->withoutExceptionHandling();
+
+        $thread=Thread::factory()->create();
+        
+        
+        $this->assertEquals($thread->slug,Str::slug($thread->title));
+        
+    }
 
    
 }

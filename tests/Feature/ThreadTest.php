@@ -28,7 +28,7 @@ class ThreadTest extends TestCase
 
     
     }
-    public function test_a_user_can_visit_single_thread()
+    public function test_a_user_can_visit_single_thread_by_slug()
     {
         $this->withoutExceptionHandling();
 
