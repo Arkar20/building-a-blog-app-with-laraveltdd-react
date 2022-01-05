@@ -26,7 +26,7 @@ class Thread extends Model
 
     public $withCount=['comments'];
 
-    public $appends=['path'];
+    public $appends=['path','is_subscribed'];
 
     //!helpers
     public function path()
@@ -133,6 +133,11 @@ class Thread extends Model
     public function unsubscribe()
     {
         return $this->subscriptions()->where('user_id',auth()->id())->delete();
+    }
+
+    public function getIsSubscribedAttribute()
+    {
+        return $this->subscriptions()->where('user_id',auth()->id())->exists();
     }
 
     public function hasNewUpdates()

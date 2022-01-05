@@ -87,10 +87,11 @@
                                 </p>
                             </div>
                         </div>
-                         <form class="m-2" action="{{route('thread.subscribe',$thread->id)}}" method="POST">
-                            @csrf
-                            <button class="btn btn-primary">Subscribe</button>
-                         </form>
+                  
+
+                         {{-- //start of subscribe --}}
+                         <div id="subscribe" thread="{{json_encode($thread)}}"></div>
+                         {{-- //end of subscribe --}}
                     </div>
                    
             </div> 
