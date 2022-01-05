@@ -70,8 +70,8 @@
                         </div>
                         @endforeach
 
-                        {{$comments->links()}}
-                         --}}
+                        {{$comments->links()}} --}}
+                        
                      
             
 

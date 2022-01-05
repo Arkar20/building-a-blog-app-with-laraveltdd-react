@@ -55,6 +55,15 @@ Route::delete('/notifications/{notification}/markasread',[NotificationThreadCont
 Route::post('/profile/{user:name}/avatar',[AvatarUploadController::class,'store'])->name('avatar.upload')->middleware('auth');
 
 
+Route::get('/api/notifications',function(){
+    return auth()->user()->notifications->map(function($noti){
+        return [
+            'message'=>$noti->data,
+            'created_at'=>$noti->created_at->diffForHumans()
+        ];
+    });
+})->middleware('auth');
+
 // Route::get('/test',function(){
 //     return "testing verified middleware";
 // })->middleware('verified');

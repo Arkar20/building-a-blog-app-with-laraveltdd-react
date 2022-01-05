@@ -32,7 +32,6 @@ if (subscribeid) {
     const thread = JSON.parse(
         document.getElementById("subscribe").getAttribute("thread")
     );
-  console.log(thread)
 
     ReactDOM.render(
         <Subscribe thread={thread} />,

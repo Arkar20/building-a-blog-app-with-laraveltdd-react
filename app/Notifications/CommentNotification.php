@@ -10,15 +10,15 @@ use Illuminate\Notifications\Notification;
 class CommentNotification extends Notification
 {
     use Queueable;
-
+    public $model;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($model)
     {
-        //
+        $this->model=$model;
     }
 
     /**
@@ -55,7 +55,8 @@ class CommentNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "message" => "A new Comment has submitted"
+            "message" => "A new Comment has submitted",
+            "path" => asset($this->model->thread->path())
         ];
     }
 }

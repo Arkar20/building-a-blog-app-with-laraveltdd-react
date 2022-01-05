@@ -17,3 +17,4 @@ require("react-toastify/dist/ReactToastify.css");
 require('./components/Comments');
 require('./components/Avatar');
 require('./components/Subscribe');
+require('./components/Notifications');

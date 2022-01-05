@@ -29,14 +29,17 @@ class Comment extends Model
         parent::boot();
         
          static::created(function($model){
-        
-                  $model->thread->increment('comments_count');
+                     
+
 
                     $subscripedusersId=$model->thread->subscriptions->pluck('user_id');
                    
-                    $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users){
-                        return $users->each->notify(new CommentNotification);
+                    $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users) use($model){
+                    
+                        return $users->each->notify(new CommentNotification( $model));
                     });
+                     $model->thread->increment('comments_count');
+
 
         });
          static::deleting(function($model){
