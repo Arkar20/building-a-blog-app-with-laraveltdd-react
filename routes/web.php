@@ -8,6 +8,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\BestCommentController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\NotificationThreadController;
 use App\Http\Controllers\ThreadSubscriptionController;
@@ -63,6 +64,9 @@ Route::get('/api/notifications',function(){
         ];
     });
 })->middleware('auth');
+
+
+Route::post('/comment/{comment:id}/bestcomment',[BestCommentController::class,'store']);
 
 // Route::get('/test',function(){
 //     return "testing verified middleware";

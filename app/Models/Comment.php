@@ -22,6 +22,8 @@ class Comment extends Model
 
     public $appends=['is_favourited'];
 
+    public $casts=['is_best'];
+
     protected $fillable=['title','thread_id','user_id'];
 
 
@@ -29,12 +31,10 @@ class Comment extends Model
         parent::boot();
         
          static::created(function($model){
-                     
-
 
                     $subscripedusersId=$model->thread->subscriptions->pluck('user_id');
                    
-                    $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users) use($model){
+                 $subscripedusersId && $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users) use($model){
                     
                         return $users->each->notify(new CommentNotification( $model));
                     });
@@ -71,6 +71,11 @@ class Comment extends Model
     {
         return $this->morphMany(Activity::class,'activity');
     }
+    public function getIsBestAttribute()
+    {     
+
+            return $this->id==$this->thread->best_comment;
+    }
 
     //*mutators
     public function setTitleAttribute($value)
@@ -99,6 +104,10 @@ class Comment extends Model
     public function  wasJustPublished()
     {
         return $this->created_at->gt(Carbon::now()->subMinute());
+    }
+    public function markAsBestReply()
+    {
+        $this->thread()->update(['best_comment'=>$this->id]);
     }
    
 }

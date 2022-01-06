@@ -66,4 +66,16 @@ class UserTest extends TestCase
 
         
     }
+    public function test_user_is_admin()
+    {
+          $user=User::factory()->create();
+
+          $this->assertFalse($user->isAdmin());
+
+          $user1=User::factory()->create(['email'=>"admin@admin.com"]);
+
+          $this->assertTrue($user1->isAdmin());
+
+
+    }
 }

@@ -156,5 +156,46 @@ class CreateCommentTest extends TestCase
       $this->assertEquals(1,$thread->fresh()->comments_count);
 
     }
+
+     public function test_normal_user_cannot_mark_the_reply_as_best_reply()
+    {
+
+         $user=User::factory()->create();
+
+        $this->actingAs($user);
+
+        $thread=Thread::factory()->create();
+
+        $comment=Comment::
+                  factory()
+                  ->create(['thread_id'=>$thread->id]);
+
+        // $comment->markAsBestReply();
+        // hit the url to mark best comment  
+        $this->post('/comment/'.$comment->id.'/bestcomment')
+            ->assertStatus(403);
+
+
+        // $this->assertStatus(403);
+
+        $this->assertEquals(null,$comment->thread->best_comment);
+    }
+     public function test_admin_can_mark_the_reply_as_best_reply()
+    {
+
+         $user=User::factory()->create(['email'=>"admin@admin.com"]);
+
+        $this->actingAs($user);
+
+        $thread=Thread::factory()->create();
+
+        $comment=Comment::
+                  factory()
+                  ->create(['thread_id'=>$thread->id]);
+        // hit the url to mark best comment 
+        $this->post('/comment/'.$comment->id.'/bestcomment');
+            
+        $this->assertEquals($comment->id,$comment->fresh()->thread->best_comment);
+    }
    
 }
