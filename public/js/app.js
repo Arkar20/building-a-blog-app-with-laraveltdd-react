@@ -5411,97 +5411,136 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-var CommentSingle = function CommentSingle(_ref) {
-  var comment = _ref.comment;
+var resetComments = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(url, operation) {
+    var _yield$axios$get$catc, response;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return operation();
+
+          case 2:
+            _context.next = 4;
+            return axios.get(url)["catch"](function (err) {
+              return console.log(err);
+            });
+
+          case 4:
+            _yield$axios$get$catc = _context.sent;
+            response = _yield$axios$get$catc.data;
+            return _context.abrupt("return", response);
+
+          case 7:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function resetComments(_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var CommentSingle = function CommentSingle(_ref2) {
+  var comment = _ref2.comment;
 
   var _useCommentContext = (0,_hooks_useCommentContext_js__WEBPACK_IMPORTED_MODULE_2__.useCommentContext)(),
       state = _useCommentContext.state,
       dispatch = _useCommentContext.dispatch;
 
   var handleDelete = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(e) {
-      var _yield$axios$delete$c, data, _yield$axios$get, response, err;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(e) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               e.preventDefault();
-              _context.next = 3;
-              return axios["delete"]("/comments/".concat(comment.id, "/delete"))["catch"](function (error) {
-                return (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)("Sorry Cannot Delete");
-              });
+              _context3.next = 3;
+              return resetComments("/comments/" + comment.threadid,
+              /*#__PURE__*/
+              //url to refetch
+              _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+                var _yield$axios$delete$c, data;
+
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+                  while (1) {
+                    switch (_context2.prev = _context2.next) {
+                      case 0:
+                        _context2.next = 2;
+                        return axios["delete"]("/comments/".concat(comment.id, "/delete"))["catch"](function (error) {
+                          return (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)("Sorry Cannot Delete");
+                        });
+
+                      case 2:
+                        _yield$axios$delete$c = _context2.sent;
+                        data = _yield$axios$delete$c.data;
+                        if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)("Delete Successful");
+
+                      case 5:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }
+                }, _callee2);
+              })));
 
             case 3:
-              _yield$axios$delete$c = _context.sent;
-              data = _yield$axios$delete$c.data;
-              if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)("Delete Successful");
-              _context.next = 8;
-              return axios.get("/comments/" + comment.threadid);
-
-            case 8:
-              _yield$axios$get = _context.sent;
-              response = _yield$axios$get.data;
-              err = _yield$axios$get.err;
-              console.log(response);
-
-              if (!err) {
-                _context.next = 14;
-                break;
-              }
-
-              return _context.abrupt("return", console.log(err));
-
-            case 14:
+              response = _context3.sent;
               if (response) dispatch({
                 type: "SET_COMMENTS",
                 payload: response
               });
 
-            case 15:
+            case 5:
             case "end":
-              return _context.stop();
+              return _context3.stop();
           }
         }
-      }, _callee);
+      }, _callee3);
     }));
 
-    return function handleDelete(_x) {
-      return _ref2.apply(this, arguments);
+    return function handleDelete(_x3) {
+      return _ref3.apply(this, arguments);
     };
   }();
 
   var handleFavourite = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(e) {
-      var _yield$axios$post$cat, data, _yield$axios$get2, response, err;
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
+      var _yield$axios$post$cat, data, _yield$axios$get, response, err;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context2.next = 2;
+              _context4.next = 2;
               return axios.post("/comments/".concat(comment.id, "/favourites"))["catch"](function (error) {
                 return (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)("Sorry Cannot Favouirted");
               });
 
             case 2:
-              _yield$axios$post$cat = _context2.sent;
+              _yield$axios$post$cat = _context4.sent;
               data = _yield$axios$post$cat.data;
               if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)(data.message);
-              _context2.next = 7;
+              _context4.next = 7;
               return axios.get("/comments/" + comment.threadid);
 
             case 7:
-              _yield$axios$get2 = _context2.sent;
-              response = _yield$axios$get2.data;
-              err = _yield$axios$get2.err;
+              _yield$axios$get = _context4.sent;
+              response = _yield$axios$get.data;
+              err = _yield$axios$get.err;
 
               if (!err) {
-                _context2.next = 12;
+                _context4.next = 12;
                 break;
               }
 
-              return _context2.abrupt("return", console.log(err));
+              return _context4.abrupt("return", console.log(err));
 
             case 12:
               if (response) dispatch({
@@ -5511,14 +5550,65 @@ var CommentSingle = function CommentSingle(_ref) {
 
             case 13:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
         }
-      }, _callee2);
+      }, _callee4);
     }));
 
-    return function handleFavourite(_x2) {
-      return _ref3.apply(this, arguments);
+    return function handleFavourite(_x4) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
+  var hadleSubmitMarkBest = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(e) {
+      var _yield$axios$post$cat2, data, _yield$axios$get2, response, err;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              e.preventDefault();
+              _context5.next = 3;
+              return axios.post("/comment/".concat(comment.id, "/bestcomment"))["catch"](function (error) {
+                return (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)("Sorry Cannot Favouirted");
+              });
+
+            case 3:
+              _yield$axios$post$cat2 = _context5.sent;
+              data = _yield$axios$post$cat2.data;
+              _context5.next = 7;
+              return axios.get("/comments/" + comment.threadid);
+
+            case 7:
+              _yield$axios$get2 = _context5.sent;
+              response = _yield$axios$get2.data;
+              err = _yield$axios$get2.err;
+
+              if (!err) {
+                _context5.next = 12;
+                break;
+              }
+
+              return _context5.abrupt("return", console.log(err));
+
+            case 12:
+              if (response) dispatch({
+                type: "SET_COMMENTS",
+                payload: response
+              });
+
+            case 13:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function hadleSubmitMarkBest(_x5) {
+      return _ref6.apply(this, arguments);
     };
   }();
 
@@ -5528,7 +5618,7 @@ var CommentSingle = function CommentSingle(_ref) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "card-body",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "card-header d-flex ",
+          className: "card-header d-flex gap-4",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
             className: "flex-md-grow-1",
             children: comment.ownername
@@ -5537,6 +5627,9 @@ var CommentSingle = function CommentSingle(_ref) {
             className: "btn btn-danger",
             onClick: handleDelete,
             children: "Delete"
+          }), comment.is_best && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            className: "btn btn-success",
+            children: "Best Comment"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "card-body d-flex",
@@ -5545,10 +5638,17 @@ var CommentSingle = function CommentSingle(_ref) {
             dangerouslySetInnerHTML: {
               __html: comment.title
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
-            className: comment.is_favourited ? "btn btn-primary" : "btn btn-light",
-            onClick: handleFavourite,
-            children: [comment.favourites_count, " Favourite"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "btn-section d-flex ",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+              className: comment.is_favourited ? "btn btn-primary" : "btn btn-light",
+              onClick: handleFavourite,
+              children: [comment.favourites_count, " Favourite"]
+            }), isAdmin && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+              className: "btn btn-danger",
+              onClick: hadleSubmitMarkBest,
+              children: "Mark As Best"
+            })]
           })]
         })]
       })
@@ -5962,13 +6062,15 @@ var Paginator = function Paginator() {
       className: "pagination",
       children: state.comments && state.comments.meta.links.map(function (link, index) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: link.active ? "page-item active" : 'page-item',
+          className: link.active ? "page-item active" : "page-item",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             className: "page-link",
             onClick: function onClick() {
               return handlePaginate(link.url);
             },
-            children: link.label
+            dangerouslySetInnerHTML: {
+              __html: link.label
+            }
           })
         }, index);
       })
@@ -6179,13 +6281,15 @@ var Subscribe = function Subscribe(_ref) {
     });
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("form", {
-    className: "m-2",
-    method: "POST",
-    onSubmit: handleSubscribe,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      className: "btn ".concat(issubscribe ? "btn-primary" : 'btn-dark'),
-      children: issubscribe ? "Unsubscribe" : "Subscribe"
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    children: isAuth && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("form", {
+      className: "m-2",
+      method: "POST",
+      onSubmit: handleSubscribe,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+        className: "btn ".concat(issubscribe ? "btn-primary" : "btn-dark"),
+        children: issubscribe ? "Unsubscribe" : "Subscribe"
+      })
     })
   });
 };

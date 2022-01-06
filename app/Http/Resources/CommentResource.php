@@ -30,7 +30,8 @@ class CommentResource extends ResourceCollection
             'humantime'=>$this->comment->created_at->diffForHumans(),
             'created_at'=>$this->comment->created_at->format('d/m/y'),
             'threadid'=>$this->comment->thread->id,
-            'path'=>$this->comment->thread->path()
+            'path'=>$this->comment->thread->path(),
+            'is_best'=>$this->comment->is_best
         ];
     }
 

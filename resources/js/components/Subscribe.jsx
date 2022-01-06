@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import {useState} from "react"
 const Subscribe = ({ thread }) => {
 
+
   const [issubscribe, setIssubscribe] = useState(thread.is_subscribed);
   
   const handleSubscribe = (e) => {
@@ -15,13 +16,20 @@ const Subscribe = ({ thread }) => {
         })
         .catch((err) => console.log(err));
   }
-  return (
-      <form className="m-2" method="POST" onSubmit={handleSubscribe}>
-          <button className={`btn ${issubscribe ?"btn-primary":'btn-dark'}`}>
-              {issubscribe ? "Unsubscribe" : "Subscribe"}
-          </button>
-      </form>
-  );
+    return (
+        <div>
+            {isAuth && <form className="m-2" method="POST" onSubmit={handleSubscribe}>
+                <button
+                    className={`btn ${
+                        issubscribe ? "btn-primary" : "btn-dark"
+                    }`}
+                >
+                    {issubscribe ? "Unsubscribe" : "Subscribe"}
+                </button>
+            </form>
+            }
+        </div>
+    );
 }
 
 export default Subscribe;

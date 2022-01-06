@@ -18,6 +18,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script>
+        window.isAuth={!! json_encode(auth()->check()) !!} // setting global property
+
+        window.isAdmin={!! json_encode(auth()->check()?auth()->user()->isAdmin():false) !!}
+    </script>
 </head>
 <body>
     <div id="app">

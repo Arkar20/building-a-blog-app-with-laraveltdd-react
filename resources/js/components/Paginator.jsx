@@ -20,9 +20,20 @@ const Paginator = () => {
             <ul className="pagination">
                 {state.comments && state.comments.meta.links.map((link,index) => {
                     return (
-                        <li key={index} className={link.active?"page-item active":'page-item'}>
-                            <button className="page-link" onClick={()=>handlePaginate(link.url)}>
-                                {link.label}
+                        <li
+                            key={index}
+                            className={
+                                link.active ? "page-item active" : "page-item"
+                            }
+                        >
+                            <button
+                                className="page-link"
+                                onClick={() => handlePaginate(link.url)}
+                                dangerouslySetInnerHTML={{
+                                    __html: link.label,
+                                }}
+                            >
+                                
                             </button>
                         </li>
                     );
