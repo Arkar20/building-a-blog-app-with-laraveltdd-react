@@ -197,5 +197,31 @@ class CreateCommentTest extends TestCase
             
         $this->assertEquals($comment->id,$comment->fresh()->thread->best_comment);
     }
+    public function test_comments_are_sorted_by_best_comment()
+    {
+        $user=User::factory()->create(['email'=>"admin@admin.com"]);
+
+        $this->actingAs($user);
+
+        $thread=Thread::factory()->create();
+
+        $comment1=Comment::
+                  factory()
+                  ->create(['thread_id'=>$thread->id]);
+        $comment2=Comment::
+                  factory()
+                  ->create(['thread_id'=>$thread->id]);
+        $comment3=Comment::
+                  factory()
+                  ->create(['thread_id'=>$thread->id]);
+        $this->post('/comment/'.$comment3->id.'/bestcomment');
+
+
+      // /threads/{channel:name}/{thread:slug}
+      $response=$this->getJson($thread->path())->json();
+
+    $latestComment=array_column($response['data'],'id')[0];
+    $this->assertEquals($comment3->id,$latestComment);
+    }
    
 }

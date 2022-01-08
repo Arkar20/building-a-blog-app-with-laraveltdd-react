@@ -24,7 +24,7 @@ class Comment extends Model
 
     public $casts=['is_best'];
 
-    protected $fillable=['title','thread_id','user_id'];
+    protected $fillable=['title','thread_id','user_id','is_best'];
 
 
      protected static function boot(){
@@ -71,11 +71,7 @@ class Comment extends Model
     {
         return $this->morphMany(Activity::class,'activity');
     }
-    public function getIsBestAttribute()
-    {     
-
-            return $this->id==$this->thread->best_comment;
-    }
+    
 
     //*mutators
     public function setTitleAttribute($value)
@@ -107,7 +103,15 @@ class Comment extends Model
     }
     public function markAsBestReply()
     {
+
         $this->thread()->update(['best_comment'=>$this->id]);
+        $this->thread->comments()->update(['is_best'=>false]);
+
+
+        $this->update(['is_best'=>true]);
+        
+        // static::where('id',$this->id)->update(['is_best',false]);
+        // static::where('id',$this->id)->update(['is_best',true]);
     }
    
 }

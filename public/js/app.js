@@ -5462,7 +5462,7 @@ var CommentSingle = function CommentSingle(_ref2) {
             case 0:
               e.preventDefault();
               _context3.next = 3;
-              return resetComments("/comments/" + comment.threadid,
+              return resetComments(state.thread.path,
               /*#__PURE__*/
               //url to refetch
               _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
@@ -5512,7 +5512,7 @@ var CommentSingle = function CommentSingle(_ref2) {
 
   var handleFavourite = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
-      var _yield$axios$post$cat, data, _yield$axios$get, response, err;
+      var _yield$axios$post$cat, data, _yield$axios$get, response;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
@@ -5528,27 +5528,17 @@ var CommentSingle = function CommentSingle(_ref2) {
               data = _yield$axios$post$cat.data;
               if (data) (0,react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast)(data.message);
               _context4.next = 7;
-              return axios.get("/comments/" + comment.threadid);
+              return axios.get(state.thread.path);
 
             case 7:
               _yield$axios$get = _context4.sent;
               response = _yield$axios$get.data;
-              err = _yield$axios$get.err;
-
-              if (!err) {
-                _context4.next = 12;
-                break;
-              }
-
-              return _context4.abrupt("return", console.log(err));
-
-            case 12:
               if (response) dispatch({
                 type: "SET_COMMENTS",
                 payload: response
               });
 
-            case 13:
+            case 10:
             case "end":
               return _context4.stop();
           }
@@ -5563,7 +5553,7 @@ var CommentSingle = function CommentSingle(_ref2) {
 
   var hadleSubmitMarkBest = /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(e) {
-      var _yield$axios$post$cat2, data, _yield$axios$get2, response, err;
+      var _yield$axios$post$cat2, data, _yield$axios$get2, response;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
         while (1) {
@@ -5579,27 +5569,17 @@ var CommentSingle = function CommentSingle(_ref2) {
               _yield$axios$post$cat2 = _context5.sent;
               data = _yield$axios$post$cat2.data;
               _context5.next = 7;
-              return axios.get("/comments/" + comment.threadid);
+              return axios.get(state.thread.path);
 
             case 7:
               _yield$axios$get2 = _context5.sent;
               response = _yield$axios$get2.data;
-              err = _yield$axios$get2.err;
-
-              if (!err) {
-                _context5.next = 12;
-                break;
-              }
-
-              return _context5.abrupt("return", console.log(err));
-
-            case 12:
               if (response) dispatch({
                 type: "SET_COMMENTS",
                 payload: response
               });
 
-            case 13:
+            case 10:
             case "end":
               return _context5.stop();
           }
@@ -5610,7 +5590,8 @@ var CommentSingle = function CommentSingle(_ref2) {
     return function hadleSubmitMarkBest(_x5) {
       return _ref6.apply(this, arguments);
     };
-  }();
+  }(); // console.log(comment.is_best)
+
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -5627,7 +5608,7 @@ var CommentSingle = function CommentSingle(_ref2) {
             className: "btn btn-danger",
             onClick: handleDelete,
             children: "Delete"
-          }), comment.is_best && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          }), !!comment.is_best && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             className: "btn btn-success",
             children: "Best Comment"
           })]

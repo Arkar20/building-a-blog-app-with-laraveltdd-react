@@ -43,7 +43,7 @@ Route::post('/threads',[ThreadController::class, 'store']);
 Route::get('/threads',[ThreadController::class, 'index']); 
 Route::delete('/threads/{thread:id}',[ThreadController::class, 'destroy'])->name('thread.delete'); 
 Route::get('/threads/{channel:name}',[ThreadController::class, 'index']); 
-Route::get('/threads/{channel:name}/{thread:slug}',[ThreadController::class, 'show']);
+Route::get('/threads/{channel:name}/{thread:slug}',[ThreadController::class, 'show'])->name('thread.show');
 
 
 Route::get('/profile/{user:name}',[ProfileController::class,'index'])->name('profile');

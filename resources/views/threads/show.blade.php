@@ -74,8 +74,15 @@
                         
                      
             
-
+                        
+            @if(auth()->check())
                <div id="comments" thread="{{json_encode($thread)}}"></div>
+            @endif
+            @if(!auth()->check())
+               <p>Please Sign In to Participate
+                   <span><a href="/login">Sign Up Now</a></span>
+               </p>
+            @endif
             </div>
 
                     <div class="col-md-4">

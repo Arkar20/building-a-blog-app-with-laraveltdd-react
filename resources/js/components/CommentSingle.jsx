@@ -21,7 +21,7 @@ const CommentSingle = ({ comment }) => {
 
       const response = await resetComments(
    
-          "/comments/" + comment.threadid, //url to refetch
+          state.thread.path, //url to refetch
           async () => {
               const { data } = await axios
                   .delete(`/comments/${comment.id}/delete`)
@@ -41,11 +41,7 @@ const CommentSingle = ({ comment }) => {
 
         if (data) toast(data.message);
 
-        const { data: response, err } = await axios.get(
-            "/comments/" + comment.threadid
-        );
-
-        if (err) return console.log(err);
+       const { data:response } = await axios.get(state.thread.path);
 
         if (response) dispatch({ type: "SET_COMMENTS", payload: response });
     };
@@ -57,16 +53,13 @@ const CommentSingle = ({ comment }) => {
              .post(`/comment/${comment.id}/bestcomment`)
              .catch((error) => toast("Sorry Cannot Favouirted"));
         
-        const { data: response, err } = await axios.get(
-            "/comments/" + comment.threadid
-        );
+              const { data: response } = await axios.get(state.thread.path);
 
-        if (err) return console.log(err);
-
-        if (response) dispatch({ type: "SET_COMMENTS", payload: response });
+            if (response) dispatch({ type: "SET_COMMENTS", payload: response });
 
     }
 
+    // console.log(comment.is_best)
     return (
         <>
             <div className="card">
@@ -82,7 +75,7 @@ const CommentSingle = ({ comment }) => {
                                 Delete
                             </button>
                         )}
-                        {comment.is_best && (
+                        {!!comment.is_best && (
                             <button className="btn btn-success">
                                 Best Comment
                             </button>

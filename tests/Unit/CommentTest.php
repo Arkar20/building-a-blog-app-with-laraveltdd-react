@@ -72,25 +72,28 @@ class CommentTest extends TestCase
         $comment->markAsBestReply();
 
         $this->assertEquals($comment->id,$comment->fresh()->thread->best_comment);
+        // dd($comment->fresh()->is_best);
+        $this->assertTrue($comment->is_best);
     }
-    public function test_comment_model_has_is_best_attribute()
-    {
-        //thread should hav
-         $user=User::factory()->create(['email'=>"admin@admin.com"]);
+    // public function test_comment_model_has_is_best_attribute()
+    // {
+    //     //thread should hav
+    //      $user=User::factory()->create(['email'=>"admin@admin.com"]);
 
-        $this->actingAs($user);
+    //     $this->actingAs($user);
 
-        $thread=Thread::factory()->create();
+    //     $thread=Thread::factory()->create();
 
-        $comment=Comment::
-                  factory()
-                  ->create(['thread_id'=>$thread->id]);
+    //     $comment=Comment::
+    //               factory()
+    //               ->create(['thread_id'=>$thread->id]);
 
      
-        $comment->markAsBestReply();
+    //     $comment->markAsBestReply();
 
-        $this->assertTrue($comment->fresh()->is_best);
-    }
+    //     $this->assertTrue($comment->fresh()->is_best);
+    // }
+    
 
     
 

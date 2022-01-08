@@ -19,7 +19,7 @@ class ThreadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified'])->only('store','destroy');
+        $this->middleware(['auth','verified'])->only('store','destroy','show');
     }
     /**
      * Display a listing of the resource.
@@ -81,7 +81,6 @@ class ThreadController extends Controller
      */
     public function show(Channel $channel,Thread $thread,Trending $trending)
     {
-
         if(!request()->wantsJson()){
 
              $thread->recordVisitedTime();
@@ -94,8 +93,8 @@ class ThreadController extends Controller
 
             return view('threads.show',compact('thread','comments'));
         }
-             
-            $comments= CommentResource::collection($thread->comments()->latest()->paginate(4)); //!decorator pattern
+              $comments= CommentResource::collection($thread->comments()->orderBy('is_best','desc')->paginate(4)); //!decorator pattern
+        
 
             return $comments;
 

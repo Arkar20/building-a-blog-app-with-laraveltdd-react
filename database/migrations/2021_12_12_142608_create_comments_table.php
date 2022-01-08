@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->string('title',100);
             $table->foreignId('thread_id')->nullOnDelete();
+            $table->boolean('is_best')->default(0);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
