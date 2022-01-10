@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+@endsection
 
 @section('content')
 
@@ -13,6 +17,7 @@
 
 <form action="/threads" method="post" class="container form-group card" >
     @csrf
+
     <div class="card-body">
     <label for="">title</label>
         <input type="text" name="title" class="form-control">
@@ -29,6 +34,8 @@
                 <option value="{{$channel->id}}">{{$channel->name}}</option>
             @endforeach
         </select>
+     <div class="g-recaptcha" data-sitekey="6LcUPwIeAAAAAI6VKwATy-RikEG2nN_DSL6w-pVy"></div>
+
         <button class="btn btn-primary my-2">Confirm</button>
     </div>
    

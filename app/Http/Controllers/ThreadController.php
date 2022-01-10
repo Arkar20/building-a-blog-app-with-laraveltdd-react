@@ -9,11 +9,10 @@ use App\Trending\Trending;
 use Illuminate\Support\Str;
  use App\Filters\ThreadFilter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Http\Requests\ThreadRequest;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
+
 use App\Http\Resources\CommentResource;
+use Error;
 
 class ThreadController extends Controller
 {
@@ -61,7 +60,7 @@ class ThreadController extends Controller
      */
     public function store( ThreadRequest $request)
     {
-        
+
         $thread=Thread::create([
                 'title'=>$request->get('title'),
                 'desc'=>$request->get('desc'),

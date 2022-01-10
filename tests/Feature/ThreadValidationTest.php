@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Rules\RecaptchaRule;
 use Psy\Exception\ErrorException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,6 +19,21 @@ class ThreadValidationTest extends TestCase
      *
      * @return void
      */
+
+      public function setUp():void
+     {
+         parent::setUp();
+
+        
+         app()->singleton(RecaptchaRule::class, function(){
+                $m=\Mockery::mock(RecaptchaRule::class);
+
+                $m->shouldRceive('passes')->andReturn(true);
+
+                return $m;
+
+         });
+     }
     public function test_thread_title_field_is_required()
     {
 
@@ -83,6 +99,25 @@ class ThreadValidationTest extends TestCase
       $response->assertSessionHasErrors('channel_id');
        
     }
-    
+    public function test_thread_require_recaphta()
+    {
+      unset(app()[RecaptchaRule::class]);
+
+      // $this->withoutExceptionHandling();
+      $user=User::factory()->create();
+
+       $this->actingAs($user);
+
+       $thread=Thread::factory()->make(['user_id'=>$user->id,'g-recaptcha-response'=> 'token']);
+
+        
+        $response=$this->post('/threads',$thread->toArray());
+
+
+       $response->assertSessionHasErrors('g-recaptcha-response');
+
+
+        
+    }
   
 }

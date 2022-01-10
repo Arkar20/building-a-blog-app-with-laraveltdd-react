@@ -42,12 +42,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     
     {
-        
-
+    
             //  Model::preventLazyLoading(!$this->app->isProduction());
              Paginator::useBootstrap();
 
              Blade::if('admin',function(){
+
+                if(!auth()->check()) return false;
+                
                  return auth()->user()->isAdmin();
              });
 

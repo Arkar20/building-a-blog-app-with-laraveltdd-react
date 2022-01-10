@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ThreadRequest extends FormRequest
@@ -27,6 +28,7 @@ class ThreadRequest extends FormRequest
            'title'=>'required',
            'desc'=>'required',
            'channel_id'=>'required|exists:channels,id',
+            'g-recaptcha-response'=>[  new RecaptchaRule()]
         ];
     }
 }

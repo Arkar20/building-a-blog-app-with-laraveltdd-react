@@ -7,8 +7,10 @@ use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
 use App\Models\Comment;
+use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 class ThreadTest extends TestCase
 {
@@ -18,6 +20,8 @@ class ThreadTest extends TestCase
      * 
      * @return void
      */
+
+    
     public function test_a_user_can_visit_threads()
     {
 

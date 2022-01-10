@@ -223,5 +223,5 @@ class CreateCommentTest extends TestCase
     $latestComment=array_column($response['data'],'id')[0];
     $this->assertEquals($comment3->id,$latestComment);
     }
-   
+  
 }
