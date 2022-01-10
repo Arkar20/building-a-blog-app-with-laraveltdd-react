@@ -19,7 +19,7 @@ class ThreadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified'])->only('store','destroy','show');
+        $this->middleware(['auth','verified'])->only('store','destroy');
     }
     /**
      * Display a listing of the resource.
@@ -135,7 +135,7 @@ class ThreadController extends Controller
        if(auth()->user()->cannot('update',$thread)){
            abort(403);
        }
-             $thread->comments->each->delete();
+        $thread->comments->each->delete();
           $thread->delete();
 
         return redirect('/threads');

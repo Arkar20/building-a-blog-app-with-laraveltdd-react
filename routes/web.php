@@ -8,6 +8,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\ThreadLockController;
 use App\Http\Controllers\BestCommentController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\NotificationThreadController;
@@ -68,6 +69,8 @@ Route::get('/api/notifications',function(){
 
 Route::post('/comment/{comment:id}/bestcomment',[BestCommentController::class,'store']);
 
+
+Route::post('/thread/{thread:id}/locked',[ThreadLockController::class,'store'])->middleware(['admin']);
 // Route::get('/test',function(){
 //     return "testing verified middleware";
 // })->middleware('verified');

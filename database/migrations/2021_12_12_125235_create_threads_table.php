@@ -20,6 +20,7 @@ class CreateThreadsTable extends Migration
             $table->foreignId('channel_id')->constrained();
             $table->bigInteger('comments_count')->default(0);
             $table->unsignedBigInteger('best_comment')->nullable()->default(null)->nullOnDelete();
+            $table->boolean('lock')->default(false);
             $table->string('slug')->unique();
             $table->string('desc');
             $table->timestamps();

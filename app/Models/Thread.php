@@ -28,6 +28,8 @@ class Thread extends Model
 
     public $appends=['path','is_subscribed'];
 
+    public $casts=['lock'];
+
     //!helpers
     public function path()
     {
@@ -162,6 +164,14 @@ class Thread extends Model
     public function visit()
     {
         return new Visit($this);
+    }
+
+    //!locking the thread
+    public function locked()
+    {
+        if(auth()->user()->isAdmin()){
+        $this->update(['lock'=>true]);
+        }
     }
    
 }

@@ -23,6 +23,7 @@ class ThreadFactory extends Factory
            'user_id'=>User::factory()->create()->id,
            'channel_id'=>Channel::factory()->create()->id,
            'slug'=>Str::slug($title),
+           'lock'=>false
         ];
     }
 }
