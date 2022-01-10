@@ -170,7 +170,7 @@ class Thread extends Model
     public function locked()
     {
         if(auth()->user()->isAdmin()){
-        $this->update(['lock'=>true]);
+             $this->update(['lock'=>!$this->lock]);
         }
     }
    

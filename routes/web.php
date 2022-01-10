@@ -70,7 +70,7 @@ Route::get('/api/notifications',function(){
 Route::post('/comment/{comment:id}/bestcomment',[BestCommentController::class,'store']);
 
 
-Route::post('/thread/{thread:id}/locked',[ThreadLockController::class,'store'])->middleware(['admin']);
+Route::post('/thread/{thread:id}/locked',[ThreadLockController::class,'store'])->middleware(['auth','admin'])->name('thread.locked');
 // Route::get('/test',function(){
 //     return "testing verified middleware";
 // })->middleware('verified');

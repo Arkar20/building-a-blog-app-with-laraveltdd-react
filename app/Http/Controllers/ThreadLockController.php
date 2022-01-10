@@ -11,6 +11,8 @@ class ThreadLockController extends Controller
     {
      
             $thread->locked();
+
+            return back();
         
     }
 }

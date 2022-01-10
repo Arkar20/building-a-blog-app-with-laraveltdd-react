@@ -18,6 +18,17 @@
                         
                         </form>
                         @endcan
+
+                        @admin
+                         <form action={{route('thread.locked',$thread->id)}} method="post">
+                                @csrf
+                              
+                                 <button type="submit" class="btn {{$thread->lock?"btn-primary":"btn-danger"}}">
+                                          {{$thread->lock?"Unlock":"Lock"}}
+                                    </button>
+                        
+                        </form>
+                        @endadmin
                       
                     </div>
                         {{$thread->desc}}
