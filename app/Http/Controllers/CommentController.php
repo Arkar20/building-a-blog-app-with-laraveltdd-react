@@ -17,6 +17,7 @@ use App\Notifications\CommentNotification;
 use App\Notifications\UserHasMentioned;
 use App\Providers\CreateComment;
 use App\Providers\UserHasComment;
+use Error;
 
 class CommentController extends Controller
 {
@@ -48,7 +49,9 @@ class CommentController extends Controller
      */
     public function store(Thread $thread,CommentRequest $request)
     {
-            
+       
+         $this->authorize('view', $thread);
+
         if(Gate::denies('create',new Comment)){
                 return response("Sorry You Are tryig too much :)",429);
             }

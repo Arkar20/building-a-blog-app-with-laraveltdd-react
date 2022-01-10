@@ -56,6 +56,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
+      
     }
 
     /**
