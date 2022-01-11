@@ -7,8 +7,11 @@
        @include('threads._list',['threads'=>$threads])
 
         </div>
+        <div class="card col-md-4 ">
+        
+                <div id="search"></div>
 
-        <div class="col-md-4 ">
+        <div class="my-2">
                 <h3>Trending Threads</h3>
                 <ul class="list-group">
                         @foreach ($trending_threads as $count=>$trending)
@@ -19,6 +22,7 @@
                         </li>
                         @endforeach
                 </ul>
+        </div>
         </div>
        
         {{$threads->withQueryString()->links()}}

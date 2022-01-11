@@ -18,3 +18,5 @@ require('./components/Comments');
 require('./components/Avatar');
 require('./components/Subscribe');
 require('./components/Notifications');
+require('./components/SearchThread');
+

@@ -5272,6 +5272,8 @@ __webpack_require__(/*! ./components/Subscribe */ "./resources/js/components/Sub
 
 __webpack_require__(/*! ./components/Notifications */ "./resources/js/components/Notifications.jsx");
 
+__webpack_require__(/*! ./components/SearchThread */ "./resources/js/components/SearchThread.jsx");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -5904,36 +5906,36 @@ var Notifications = function Notifications() {
     className: "nav-item",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
       onClick: fetchAllNotis,
-      "class": "nav-link",
+      className: "nav-link",
       "data-bs-toggle": "modal",
       "data-bs-target": "#exampleModal",
       children: "Notifications"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      "class": "modal fade",
+      className: "modal fade",
       id: "exampleModal",
-      tabindex: "-1",
+      tabIndex: "-1",
       "aria-labelledby": "exampleModalLabel",
       "aria-hidden": "true",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        "class": "modal-dialog",
+        className: "modal-dialog",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          "class": "modal-content",
+          className: "modal-content",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            "class": "modal-header",
+            className: "modal-header",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-              "class": "modal-title",
+              className: "modal-title",
               id: "exampleModalLabel",
               children: "Notifications"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
               type: "button",
-              "class": "btn-close",
+              className: "btn-close",
               "data-bs-dismiss": "modal",
               "aria-label": "Close"
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            "class": "modal-body",
+            className: "modal-body",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-              "class": "list-group",
+              className: "list-group",
               children: [!!notis.length && notis.map(function (noti, key) {
                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("form", {
                   method: "POST",
@@ -6211,6 +6213,112 @@ var RegisterComment = function RegisterComment() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RegisterComment);
+
+/***/ }),
+
+/***/ "./resources/js/components/SearchThread.jsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/SearchThread.jsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var SearchThread = function SearchThread() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      search = _useState2[0],
+      setSearch = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      list = _useState4[0],
+      setList = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      filteredSearchList = _useState6[0],
+      setfilteredSearchList = _useState6[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // if list is an empty array fetch from backend api 
+    !list && axios.get("/api/searchThreads").then(function (res) {
+      setList(res.data.data);
+      setfilteredSearchList(res.data.data);
+    }); //else filtered the list 
+
+    list && setfilteredSearchList(function () {
+      return list.filter(function (data) {
+        return data.title.toLowerCase().includes(search);
+      });
+    });
+  }, [search]);
+  var filteredList = filteredSearchList ? filteredSearchList.map(function (list) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+      className: "list-group-item",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+        href: "".concat(list.path),
+        "class": "text-decoration-none",
+        children: list.title
+      })
+    }, list.path);
+  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+    children: "No Records Found"
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+      children: "Search Threads"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+      className: "form-control w-full",
+      value: search,
+      onChange: function onChange(e) {
+        return setSearch(e.target.value);
+      }
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "list ",
+      style: {
+        zIndex: 1001
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("ul", {
+        className: "list-group overflow-scroll",
+        style: {
+          height: "200px"
+        },
+        children: filteredList
+      })
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchThread);
+var serachid = document.getElementById("search");
+
+if (serachid) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(SearchThread, {}), document.getElementById("search"));
+}
 
 /***/ }),
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Thread;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,7 @@ use App\Http\Controllers\BestCommentController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\NotificationThreadController;
 use App\Http\Controllers\ThreadSubscriptionController;
+use App\Http\Resources\ThreadResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +70,10 @@ Route::get('/api/notifications',function(){
         ];
     });
 })->middleware('auth');
+
+Route::get('/api/searchThreads',function(){
+    return ThreadResource::collection(Thread::all());
+});
 
 
 Route::post('/comment/{comment:id}/bestcomment',[BestCommentController::class,'store']);

@@ -19,34 +19,34 @@ const Notifications = () => {
       <li className="nav-item">
           <button
               onClick={fetchAllNotis}
-              class="nav-link"
+              className="nav-link"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
           >
               Notifications
           </button>
           <div
-              class="modal fade"
+              className="modal fade"
               id="exampleModal"
-              tabindex="-1"
+              tabIndex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
           >
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">
+              <div className="modal-dialog">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <h5 className="modal-title" id="exampleModalLabel">
                               Notifications
                           </h5>
                           <button
                               type="button"
-                              class="btn-close"
+                              className="btn-close"
                               data-bs-dismiss="modal"
                               aria-label="Close"
                           ></button>
                       </div>
-                      <div class="modal-body">
-                          <div class="list-group">
+                      <div className="modal-body">
+                          <div className="list-group">
                               {/* @forelse (auth()->user()->notifications as $noti) */}
                               {!!notis.length &&
                                   notis.map((noti, key) => (
