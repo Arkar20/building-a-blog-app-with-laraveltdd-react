@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
  use App\Filters\ThreadFilter;
 use Illuminate\Http\Request;
 use App\Http\Requests\ThreadRequest;
-
+use App\Http\Requests\ThreadUpdateRequest;
 use App\Http\Resources\CommentResource;
 use Error;
 
@@ -118,9 +118,17 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Channel $channel, Thread $thread,ThreadUpdateRequest $request)
     {
-        //
+       
+        $this->authorize('update',$thread);
+
+        $thread->update([
+            'title'=>$request->title,
+            'desc'=>$request->desc    
+        ]);
+
+        return $thread;
     }
 
     /**
