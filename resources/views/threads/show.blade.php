@@ -30,6 +30,9 @@
                             </form>
                             @endadmin
 
+
+                         
+
                    
                       
                     </div>
@@ -108,10 +111,18 @@
                             </div>
                         </div>
                   
-
-                         {{-- //start of subscribe --}}
+                        <div  class="d-flex">
+                            {{-- //start of subscribe --}}
                          <div id="subscribe" thread="{{json_encode($thread)}}"></div>
                          {{-- //end of subscribe --}}
+
+                            @can('update',$thread)
+                                <a href="{{route('thread.edit',$thread->slug)}}" class="btn btn-sm btn-success ">
+                                    Update Thread
+                                </a>
+                            @endcan
+                        </div>
+                         
                     </div>
                    
             </div> 

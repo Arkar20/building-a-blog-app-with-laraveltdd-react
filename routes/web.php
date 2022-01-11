@@ -44,6 +44,8 @@ Route::post('/threads',[ThreadController::class, 'store']);
 Route::get('/threads',[ThreadController::class, 'index']); 
 Route::delete('/threads/{thread:id}',[ThreadController::class, 'destroy'])->name('thread.delete'); 
 Route::get('/threads/{channel:name}',[ThreadController::class, 'index']); 
+Route::get('/threads/{thread:slug}/edit',[ThreadController::class, 'edit'])->name('thread.edit');
+
 Route::patch('/threads/{channel:name}/{thread:slug}',[ThreadController::class, 'update'])->name('thread.update');
 Route::get('/threads/{channel:name}/{thread:slug}',[ThreadController::class, 'show'])->name('thread.show');
 

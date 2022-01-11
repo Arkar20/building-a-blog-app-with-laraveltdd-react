@@ -108,7 +108,9 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
-        //
+        $this->authorize('update',$thread);
+
+        return view('threads.edit',compact('thread'));
     }
 
     /**
@@ -128,7 +130,7 @@ class ThreadController extends Controller
             'desc'=>$request->desc    
         ]);
 
-        return $thread;
+        return back();
     }
 
     /**
