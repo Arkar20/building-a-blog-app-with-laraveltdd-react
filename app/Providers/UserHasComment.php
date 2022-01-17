@@ -23,7 +23,7 @@ class UserHasComment
      *
      * @return void
      */
-    public function __construct(Thread $thread,CommentRequest $request)
+    public function __construct(Thread $thread, CommentRequest $request)
     {
         $this->thread=$thread;
         $this->request=$request;

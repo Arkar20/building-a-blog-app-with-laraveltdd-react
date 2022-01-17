@@ -44,11 +44,10 @@ class UserHasMentioned extends Notification
     public function toMail($notifiable)
     {
             return (new MailMessage)
-                     ->subject('New Comment Has Submitted!')
-                    ->from("Laravel React")   
-                    ->view(
-                        'emails.newcomment', ['thread' => $this->thread]
-                ); 
+                        ->subject('You have Been Menditon In a Blog')
+                        ->line('Check Out ! you Have Been mentioned in a comment.')
+                        ->from("Laravel React") ;
+                   
     }
 
     /**

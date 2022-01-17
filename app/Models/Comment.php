@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Thread;
+use App\Jobs\NewComment;
 use App\Models\Favourite;
 use App\Traits\ActivityTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use App\Notifications\CommentNotification;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
@@ -32,14 +33,8 @@ class Comment extends Model
         
          static::created(function($model){
 
-                    $subscripedusersId=$model->thread->subscriptions->pluck('user_id');
-                   
-                 $subscripedusersId && $usersToNotify=User::whereIn('id',$subscripedusersId)->chunk(10,function($users) use($model){
-                    
-                        return $users->each->notify(new CommentNotification( $model));
-                    });
-                     $model->thread->increment('comments_count');
 
+                     $model->thread->increment('comments_count');
 
         });
          static::deleting(function($model){

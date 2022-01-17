@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\Requests\CommentRequest;
 use App\Models\Thread;
+use App\Jobs\NewComment;
 use App\Providers\UserHasComment;
+use App\Http\Requests\CommentRequest;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -19,7 +20,9 @@ class CreateComment
      */
     public function handle(UserHasComment $event)
     {
-        $event->thread->comments()->create(['title'=>$event->request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
+      $comment=  $event->thread->comments()->create(['title'=>$event->request->title,'user_id'=>auth()->id()]);  //* also incrementing the comment by model event
+
+         NewComment::dispatch($comment);
         
     }
 }

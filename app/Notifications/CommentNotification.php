@@ -41,6 +41,7 @@ class CommentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                     
                     ->subject("A New Comment Has Submitted")
                     ->line('Check Out New Comment in your subscribed thread.')
                     ->action('View', url('/'))

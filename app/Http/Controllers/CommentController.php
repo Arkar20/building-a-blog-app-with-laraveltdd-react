@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use Whoops\Exception\ErrorException;
 use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
+use App\Jobs\NewComment;
 use App\Notifications\CommentNotification;
 use App\Notifications\UserHasMentioned;
 use App\Providers\CreateComment;
@@ -57,7 +58,7 @@ class CommentController extends Controller
         //     }
        
 
-        event(new UserHasComment($thread,$request));
+        event(new UserHasComment($thread,$request)); 
 
         if(request()->wantsJson()){
             return $thread;
