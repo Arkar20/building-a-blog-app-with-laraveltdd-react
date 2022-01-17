@@ -52,9 +52,9 @@ class CommentController extends Controller
        
          $this->authorize('view', $thread);
 
-        if(Gate::denies('create',new Comment)){
-                return response("Sorry You Are tryig too much :)",429);
-            }
+        // if(Gate::denies('create',new Comment)){
+        //         return response("Sorry You Are tryig too much :)",429);
+        //     }
        
 
         event(new UserHasComment($thread,$request));

@@ -29,7 +29,7 @@ class CommentNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database','mail'];
     }
 
     /**
@@ -38,13 +38,14 @@ class CommentNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    // public function toMail($notifiable)
-    // {
-    //     return (new MailMessage)
-    //                 ->line('The introduction to the notification.')
-    //                 ->action('Notification Action', url('/'))
-    //                 ->line('Thank you for using our application!');
-    // }
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+                    ->subject("A New Comment Has Submitted")
+                    ->line('Check Out New Comment in your subscribed thread.')
+                    ->action('View', url('/'))
+                    ->line('Thank you for using our application!');
+    }
 
     /**
      * Get the array representation of the notification.
