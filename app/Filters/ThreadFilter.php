@@ -15,8 +15,6 @@ class ThreadFilter extends Filter{
     {
          $user=User::where('name',$username)->firstorFail();
             $query=  $query->where('user_id',$user->id);
-     
-
             return $query;
     }
     public function popular($filter,$query)
@@ -26,9 +24,8 @@ class ThreadFilter extends Filter{
     }         
     public function uncomment($filter,$query)
     {
-          return   $query->where('comments_count',0);
-
-            
+             return $query->where('comments_count',0);   
+           
     }
 
 }

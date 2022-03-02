@@ -11,7 +11,10 @@ class Trending{
     }
     public function setTrending($thread)
     {
-        return Redis::zincrby($this->getKey(),1,json_encode(['title'=>$thread->title,'path'=>$thread->path()]));
+        if(auth()->check()){
+            return Redis::zincrby($this->getKey(),1,json_encode(['title'=>$thread->title,'path'=>$thread->path()]));
+        }
+        return;
     }
     public function getKey()
     {

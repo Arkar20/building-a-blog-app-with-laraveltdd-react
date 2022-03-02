@@ -27,7 +27,7 @@ class ThreadController extends Controller
      */
     public function index(Channel $channel=null,ThreadFilter $filters,Trending $trending)
     {
-         $threads= $this->getThreads($channel,$filters);
+        $threads=$this->getThreads($channel,$filters);
          
          if(request()->wantsJson()){
             return response()->json($threads);
@@ -35,7 +35,7 @@ class ThreadController extends Controller
 
         $trending_threads=$trending->getTrending();
        
-      
+    //   dd($threads);
 
        return view('threads.index',compact('threads','trending_threads'));
     }
@@ -151,7 +151,7 @@ class ThreadController extends Controller
     }
     public function getThreads($channel,ThreadFilter $filters)
     {
-         if($channel){
+         if($channel->name){
         
             $threads=$channel->threads();
 
@@ -162,9 +162,6 @@ class ThreadController extends Controller
 
         $threads=$threads->filter($filters);
    
-
-     
-
         // return $threads->get();
         $threads=$threads->with('channel')->latest()->paginate(10);
 

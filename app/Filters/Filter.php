@@ -16,12 +16,13 @@ abstract class Filter {
     {
         $this->request = $request;
     }
+    
     public function apply($query)
     {
         foreach($this->filters as $filter){
-         if(method_exists($this,$filter) && $username=$this->request->get($filter)){
-           $query=  $this->$filter($username,$query);     
-         }
+            if(method_exists($this,$filter) && $username=$this->request->get($filter)){
+                $query= $this->$filter($username,$query);     
+            }
         }
 
 
