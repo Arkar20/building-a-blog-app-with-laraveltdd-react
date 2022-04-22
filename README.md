@@ -1,11 +1,4 @@
-<p align="center">Form TDD With React</p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+##Form TDD With React
 
 ## About 
 
@@ -16,4 +9,9 @@ lesson learnt – Learnt how to develop the project Test Driven Development (TDD
 Challenges - As the tutorial is developed with Laravel version 5. There is a small version conflict. But however, after doing my own research, I overcome this issue. Another issue is the tutorial is built with Vue js and as a react fan, this project uses React js. There is a difference when developing the client side.
 
 uture plan – Develop API for mobile development (react-native).
+
+
+## Preview
+
+![App Screenshot](https://github.com/Arkar20/building-a-blog-app-with-laraveltdd-react/blob/master/Screen%20Shot%202022-04-22%20at%2012.01.26%20PM.png?raw=true)
 
